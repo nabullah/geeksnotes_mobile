@@ -1,0 +1,7 @@
+{
+  "name": "geeksnotes_mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
