@@ -1,0 +1,191 @@
+<ion-content>
+	<div class="wrapper">
+		<div class="w-1/3 m-auto py-5 mt-3">
+			<img src="../../../assets/brand/logo-no-background.svg" alt="" />
+		</div>
+		<div class="mt-3 text-center">
+			@if (formIndex === 1 || formIndex === 2) {
+			<ion-text class="font-semibold text-[24px] leading-32">Create an account</ion-text>
+			} @else if (formIndex === 3) {
+			<ion-text class="font-semibold text-[24px] leading-32">Additional Details</ion-text>
+			}
+		</div>
+		<div class="input-form mx-4" [formGroup]="registerForm" [@swipe]="swipeDirection">
+			@if (formIndex === 1) {
+			<div>
+				<div class="input-control">
+					<input
+						formControlName="email"
+						type="text"
+						class="mt-1 block w-full px-3 py-3 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(f['email'].invalid && f['email'].touched) || (submitted && f['email'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Enter your email"
+						aria-label="Enter your email"
+						aria-describedby="email-addon"
+					/>
+				</div>
+				<div class="input-control">
+					<input
+						formControlName="password"
+						type="text"
+						class="mt-1 block w-full px-3 py-3 bg-white border border-slate-300 text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(f['password'].invalid && f['password'].touched) || (submitted && f['password'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Enter your Password"
+						aria-label="Enter your Password"
+						aria-describedby="password-addon"
+					/>
+					<small class="text-red-600 italic ml-1" *ngIf="submitted && f['password']?.errors?.['required']">Field is Required </small>
+					<small class="text-red-600 italic ml-1" *ngIf="f['email'].touched && f['password']?.errors?.['minlength']">Min 6 characters required </small>
+				</div>
+				<div class="mt-4">
+					<ion-button class="w-full" (click)="formIndex = 2; swipeDirection = 1">Get Started</ion-button>
+				</div>
+
+				<div class="text-center mt-4">
+					<div class="relative text-center">
+						<div class="absolute inset-0 flex items-center" aria-hidden="true">
+							<div class="w-full border-t border-gray-300"></div>
+						</div>
+						<span class="relative bg-white px-2">OR</span>
+					</div>
+				</div>
+
+				<div class="mt-4">
+					<!-- google signin -->
+				</div>
+
+				<div class="mt-4 text-center">
+					<ion-text class="font-normal text-[14px] leading-5">Already have an account? <span class="text-[#6941C6]" [routerLink]="[routes.Login]">Log in</span></ion-text>
+				</div>
+			</div>
+			} @else if (formIndex === 2) {
+			<div>
+				<div class="input-control">
+					<input
+						formControlName="fullName"
+						type="text"
+						class="mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(f['fullName'].invalid && f['fullName'].touched) || (submitted && f['fullName'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Enter your name"
+						aria-label="name"
+						aria-describedby="name-addon"
+					/>
+				</div>
+				<div class="input-control">
+					<input
+						formControlName="profession"
+						type="text"
+						class="mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(f['profession'].invalid && f['profession'].touched) || (submitted && f['profession'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Profession"
+						aria-label="Profession"
+						aria-describedby="Profession-addon"
+						id="open-modal"
+						expand="block"
+					/>
+					<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+						<ng-template>
+							<app-profession-list-modal></app-profession-list-modal>
+						</ng-template>
+					</ion-modal>
+				</div>
+
+				<div class="mt-4">
+					<ion-button class="w-full" (click)="submitFormOne(); swipeDirection = 3">Continue</ion-button>
+				</div>
+				<div class="mt-4">
+					<ion-button class="w-full" fill="clear" (click)="formIndex = 1; swipeDirection = 0">Back</ion-button>
+				</div>
+			</div>
+			} @if (formIndex === 3) {
+			<div class="input-form" [formGroup]="registerFormTwo">
+				<div class="input-control">
+					<input
+						formControlName="institute"
+						type="text"
+						class="mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(g['institute'].invalid && g['institute'].touched) || (submitted && g['institute'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Institute"
+						aria-label="institute"
+						aria-describedby="institute-addon"
+					/>
+				</div>
+				<div class="input-control">
+					<input
+						formControlName="place"
+						type="text"
+						class="mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(g['place'].invalid && g['place'].touched) || (submitted && g['place'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Place"
+						aria-label="place"
+						aria-describedby="place-addon"
+					/>
+				</div>
+				<div class="input-control">
+					<input
+						formControlName="graduationDate"
+						(click)="getGraduationDateCalender(graduationDateRef)"
+						readonly
+						type="text"
+						class="mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(g['graduationDate'].invalid && g['graduationDate'].touched) || (submitted && g['graduationDate'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Graduation Date"
+						aria-label="graduationDate"
+						aria-describedby="graduationDate-addon"
+					/>
+					<ion-datetime-button datetime="date" class="hidden"></ion-datetime-button>
+					<ion-modal [keepContentsMounted]="true" #graduationDateRef>
+						<ng-template>
+							<ion-datetime id="date" presentation="date" (ionChange)="selectGraduationDate($event)"></ion-datetime>
+						</ng-template>
+					</ion-modal>
+				</div>
+				<div class="input-control">
+					<input
+						formControlName="graduationYear"
+						(click)="getGraduationYearCalender(graduationYearRef)"
+						readonly
+						type="text"
+						class="mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(g['graduationDate'].invalid && g['graduationDate'].touched) || (submitted && g['graduationDate'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Graduation Year"
+						aria-label="Graduation Year"
+						aria-describedby="graduationYear-addon"
+					/>
+					<ion-datetime-button datetime="year" class="hidden"></ion-datetime-button>
+					<ion-modal [keepContentsMounted]="true" #graduationYearRef>
+						<ng-template>
+							<ion-datetime id="year" presentation="year" (ionChange)="selectGraduationYear($event)"></ion-datetime>
+						</ng-template>
+					</ion-modal>
+				</div>
+				<div class="input-control">
+					<textarea
+						rows="10"
+						formControlName="qualificationsSummary"
+						type="text"
+						class="mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(g['qualificationsSummary'].invalid && g['qualificationsSummary'].touched) || (submitted && g['qualificationsSummary'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Summarize your Educational Qualifications"
+						aria-label="place"
+						aria-describedby="place-addon"
+					></textarea>
+				</div>
+
+				<div class="mt-4">
+					<ion-button class="w-full" (click)="submitFormTwo()">Continue</ion-button>
+				</div>
+			</div>
+			}
+		</div>
+	</div>
+</ion-content>

@@ -1,0 +1,60 @@
+<ion-content>
+	<div class="wrapper">
+		<div class="w-1/3 m-auto py-5 mt-3">
+			<img src="../../../assets/brand/logo-no-background.svg" alt="" />
+		</div>
+		<div class="mt-3 text-center">
+			<ion-text class="font-semibold text-[24px] leading-32">Welcome back</ion-text>
+		</div>
+		<div class="input-form mx-4" [formGroup]="loginForm">
+			<div>
+				<div class="input-control">
+					<input
+						formControlName="email"
+						type="text"
+						class="mt-1 block w-full px-3 py-3 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(f['email'].invalid && f['email'].touched) || (submitted && f['email'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Enter your email"
+						aria-label="Enter your email"
+						aria-describedby="email-addon"
+					/>
+				</div>
+				<div class="input-control">
+					<input
+						formControlName="password"
+						type="password"
+						class="mt-1 block w-full px-3 py-3 bg-white border border-slate-300 text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none {{
+							(f['password'].invalid && f['password'].touched) || (submitted && f['password'].invalid) ? 'ring-1 ring-red-500' : 'border-slate-300'
+						}}"
+						placeholder="Enter your Password"
+						aria-label="Enter your Password"
+						aria-describedby="password-addon"
+					/>
+					<small class="text-red-600 italic ml-1" *ngIf="submitted && f['password']?.errors?.['required']">Field is Required </small>
+					<small class="text-red-600 italic ml-1" *ngIf="f['email'].touched && f['password']?.errors?.['minlength']">Min 6 characters required </small>
+				</div>
+				<div class="mt-4">
+					<ion-button class="w-full" (click)="submitLogin()">Log in</ion-button>
+				</div>
+
+				<div class="mt-4">
+					<!-- google signin -->
+				</div>
+
+                <div class="flex gap-2 justify-between">
+                    <div class="checkbox">
+                        <ion-checkbox labelPlacement="end">Remember me</ion-checkbox>
+                    </div>
+                    <div class="forget">
+                        <span class="text-[#6941C6]">Forget Password</span>
+                    </div>
+                </div>
+
+				<div class="mt-4 text-center">
+					<ion-text class="font-normal text-[14px] leading-5">Don’t have an account? <span class="text-[#6941C6]" [routerLink]="[routes.Register]">Register</span></ion-text>
+				</div>
+			</div>
+		</div>
+	</div>
+</ion-content>

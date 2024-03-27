@@ -1,0 +1,9 @@
+@import url("./variables.scss");
+
+.input-control {
+	margin-top: 16px;
+
+	input {
+		border-radius: var(--radius-md);
+	}
+}

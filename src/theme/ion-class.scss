@@ -1,0 +1,36 @@
+@import url("./variables.scss");
+
+ion-button {
+	--padding-top: 16px;
+	--padding-bottom: 16px;
+	--box-shadow: 0px 1px 2px 0px #1018280d;
+	--border-radius: var(--radius-md);
+}
+
+.sc-ion-searchbar-md-h {
+	--border-radius: var(--radius-md);
+}
+.searchbar-input.sc-ion-searchbar-md {
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+.searchbar-search-icon.sc-ion-searchbar-md {
+	top: 16px;
+}
+
+:host(.checkbox-label-placement-end) .label-text-wrapper {
+	margin-inline-start: 8px !important;
+}
+
+ion-checkbox {
+	--border-radius: var(--radius-sm);
+	--size: 18px;
+	--border-color: #d0d5dd;
+}
+
+ion-checkbox::part(container) {
+	padding: 2px;
+}
+ion-checkbox::part(label) {
+	margin-inline-start: 12px;
+}
