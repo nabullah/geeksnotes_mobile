@@ -1,9 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { SegmentCustomEvent } from "@ionic/angular";
 import { LibrarySegments } from "src/app/core/enum/segments.enum";
 import { RoutesPath } from "src/app/core/routes/routes";
 import { SignalService } from "src/app/core/services/signal.service";
+import { SearchPage } from "../../search/search.page";
+import { IonModal } from "@ionic/angular/common";
 
 @Component({
 	selector: "app-library",
@@ -11,14 +13,22 @@ import { SignalService } from "src/app/core/services/signal.service";
 	styleUrls: ["./library.page.scss"],
 })
 export class LibraryPage {
-	segmentsEnum = LibrarySegments;
-	segments: string;
-	routePaths = RoutesPath;
+	public searchComponent = SearchPage;
+	@ViewChild("sortByModal") sortByModal!: IonModal;
+
+	public segmentsEnum = LibrarySegments;
+	public segments: string;
+	private routePaths = RoutesPath;
+
 	constructor(private readonly router: Router) {
 		this.segments = this.segmentsEnum.Library;
 	}
 
-	segmentChanged(event: SegmentCustomEvent) {
+	ionViewDidLeave(): void {
+		this.segments = this.segmentsEnum.Library;
+	}
+
+	public segmentChanged(event: SegmentCustomEvent) {
 		if (event.detail.value === this.segmentsEnum.Recents) {
 			this.router.navigate([this.routePaths.LibraryRecents]);
 			this.segments = this.segmentsEnum.Recents;
@@ -28,7 +38,11 @@ export class LibraryPage {
 		}
 	}
 
-	ionViewDidLeave(): void {
-		this.segments = this.segmentsEnum.Library;
+	public routeToSearch() {
+		this.router.navigate([this.routePaths.Search]);
+	}
+
+	public openSortByModal() {
+		this.sortByModal.present();
 	}
 }

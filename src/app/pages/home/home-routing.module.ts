@@ -9,7 +9,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: "notes-listing",
-				loadChildren: () => import("./notes-listing/notes-listing.module").then((m) => m.NotesListingPageModule),
+				loadChildren: () => import("./notes/notes.module").then((m) => m.NotesListingPageModule),
 			},
 			{
 				path: "library",

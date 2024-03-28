@@ -34,6 +34,6 @@ export class LoginComponent implements OnInit {
 	}
 
 	submitLogin() {
-		this.router.navigate([RoutesPath.Dashboard]);
+		this.router.navigate([RoutesPath.LibraryList]);
 	}
 }

@@ -6,5 +6,6 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./library-recents.component.scss"],
 })
 export class LibraryRecentsComponent {
+	public notes = [];
 	constructor() {}
 }
