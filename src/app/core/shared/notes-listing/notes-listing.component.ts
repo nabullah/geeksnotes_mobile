@@ -1,4 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { RoutesPath } from "../../routes/routes";
+import { NavController } from "@ionic/angular";
+import { NoteDetailsPage } from "src/app/pages/note-details/note-details.page";
 
 @Component({
 	selector: "app-notes-listing",
@@ -7,5 +11,13 @@ import { Component, Input, OnInit } from "@angular/core";
 })
 export class NotesListingComponent {
 	@Input() notes: any;
-	constructor() {}
+	public NoteDetailsComponent = NoteDetailsPage;
+
+	constructor(private readonly router: Router, private navController: NavController) {}
+
+	openDetailsPage(noteId: number) {
+		// this.navController.setDirection("forward", true ,"forward");
+		this.router.navigate([RoutesPath.NotesDetails, noteId]);
+		// this.navController.navigateForward([RoutesPath.NotesDetails, noteId]);
+	}
 }

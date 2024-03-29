@@ -12,19 +12,19 @@
 				</ion-segment>
 			</div>
 			<div class="flex items-center mr-2">
-				<ion-nav-link router-direction="forward" [component]="searchComponent">
+				<ion-nav-link router-direction="forward" [component]="SearchComponent">
 					<ion-button size="small" fill="clear" (click)="routeToSearch()">
-						<ion-icon name="search-outline" color="light"></ion-icon>
+						<ion-icon name="search" color="light"></ion-icon>
 					</ion-button>
 				</ion-nav-link>
 				<ion-button size="small" fill="clear" id="open-modal-options" expand="block">
-					<ion-icon name="ellipsis-horizontal-outline" color="light"></ion-icon>
+					<ion-icon name="ellipsis-horizontal" color="light"></ion-icon>
 				</ion-button>
 			</div>
 		</div>
 	</ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
+<ion-content class="ion-padding-sm">
 	<router-outlet></router-outlet>
 </ion-content>
 

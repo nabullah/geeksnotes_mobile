@@ -15,4 +15,6 @@ export enum RoutesPath {
 	Profile = "/home/profile",
 
 	Search = "/search",
+
+	NotesDetails = "/note-detail",
 }

@@ -6,5 +6,6 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./profile.page.scss"],
 })
 export class ProfilePage {
+	public ProfilePageComponent = ProfilePage;
 	constructor() {}
 }

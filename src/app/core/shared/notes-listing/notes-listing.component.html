@@ -1,37 +1,16 @@
 <ion-grid>
 	<ion-row>
+		@for (item of [1,2,3,4,5]; track $index) {
 		<ion-col size="6" sizeSm="4">
-			<ion-card class="mx-0">
-				<img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-				<ion-card-header>
-					<ion-card-title>Card Title</ion-card-title>
-					<ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-				</ion-card-header>
-
-				<ion-card-content> Here's a small text description. </ion-card-content>
-			</ion-card>
+			<ion-nav-link router-direction="forward" [component]="NoteDetailsComponent">
+				<ion-card class="mx-0" (click)="openDetailsPage($index)">
+					<img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" class="h-[200px]" />
+					<ion-card-header class="px-[8px] py-[12px]">
+						<ion-card-subtitle class="truncate-two">All about PDF express can be found in the document. PDF.js is used for viewing PDF files.</ion-card-subtitle>
+					</ion-card-header>
+				</ion-card>
+			</ion-nav-link>
 		</ion-col>
-		<ion-col size="6" sizeSm="4">
-			<ion-card class="mx-0">
-				<img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-				<ion-card-header>
-					<ion-card-title>Card Title</ion-card-title>
-					<ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-				</ion-card-header>
-
-				<ion-card-content> Here's a small text description. </ion-card-content>
-			</ion-card>
-		</ion-col>
-		<ion-col size="6" sizeSm="4">
-			<ion-card class="mx-0">
-				<img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-				<ion-card-header>
-					<ion-card-title>Card Title</ion-card-title>
-					<ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-				</ion-card-header>
-
-				<ion-card-content> Here's a small text description. </ion-card-content>
-			</ion-card></ion-col
-		>
+		}
 	</ion-row>
 </ion-grid>

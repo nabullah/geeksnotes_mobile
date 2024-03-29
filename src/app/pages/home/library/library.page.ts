@@ -13,12 +13,11 @@ import { IonModal } from "@ionic/angular/common";
 	styleUrls: ["./library.page.scss"],
 })
 export class LibraryPage {
-	public searchComponent = SearchPage;
+	public readonly SearchComponent = SearchPage;
 	@ViewChild("sortByModal") sortByModal!: IonModal;
 
 	public segmentsEnum = LibrarySegments;
 	public segments: string;
-	private routePaths = RoutesPath;
 
 	constructor(private readonly router: Router) {
 		this.segments = this.segmentsEnum.Library;
@@ -30,16 +29,16 @@ export class LibraryPage {
 
 	public segmentChanged(event: SegmentCustomEvent) {
 		if (event.detail.value === this.segmentsEnum.Recents) {
-			this.router.navigate([this.routePaths.LibraryRecents]);
+			this.router.navigate([RoutesPath.LibraryRecents]);
 			this.segments = this.segmentsEnum.Recents;
 		} else {
-			this.router.navigate([this.routePaths.LibraryList]);
+			this.router.navigate([RoutesPath.LibraryList]);
 			this.segments = this.segmentsEnum.Library;
 		}
 	}
 
 	public routeToSearch() {
-		this.router.navigate([this.routePaths.Search]);
+		this.router.navigate([RoutesPath.Search]);
 	}
 
 	public openSortByModal() {

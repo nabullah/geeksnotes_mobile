@@ -61,6 +61,6 @@ ion-modal {
 	}
 
 	&::part(content) {
-		border-radius: 16px;
+		border-radius: var(--radius-xl);
 	}
 }

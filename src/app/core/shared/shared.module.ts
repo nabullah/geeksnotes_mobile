@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { NotesListingComponent } from "./notes-listing/notes-listing.component";
 import { IonicModule } from "@ionic/angular";
 
-const COMPOENTS: any[] = [NotesListingComponent];
+const COMPOENTS: Array<any> = [NotesListingComponent];
 @NgModule({
 	declarations: [COMPOENTS],
 	imports: [CommonModule, IonicModule],

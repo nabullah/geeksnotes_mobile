@@ -7,6 +7,7 @@ const routes: Routes = [
 		path: "",
 		component: HomePage,
 		children: [
+			{ path: "", redirectTo: "library", pathMatch: "full" },
 			{
 				path: "notes-listing",
 				loadChildren: () => import("./notes/notes.module").then((m) => m.NotesListingPageModule),
@@ -23,6 +24,7 @@ const routes: Routes = [
 				path: "profile",
 				loadChildren: () => import("./profile/profile.module").then((m) => m.ProfilePageModule),
 			},
+			
 		],
 	},
 ];

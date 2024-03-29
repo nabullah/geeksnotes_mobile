@@ -19,6 +19,10 @@ const routes: Routes = [
 		path: "search",
 		loadChildren: () => import("./pages/search/search.module").then((m) => m.SearchPageModule),
 	},
+	{
+		path: "note-detail/:id",
+		loadChildren: () => import("./pages/note-details/note-details.module").then((m) => m.NoteDetailsPageModule),
+	},
 ];
 
 @NgModule({

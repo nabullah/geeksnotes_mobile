@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 		this.submitted = false;
 	}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.initializeLoginForm();
 	}
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 		return this.loginForm.controls;
 	}
 
-	submitLogin() {
-		this.router.navigate([RoutesPath.LibraryList]);
+	public submitLogin() {
+		this.router.navigate([RoutesPath.Dashboard]);
 	}
 }

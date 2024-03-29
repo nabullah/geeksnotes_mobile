@@ -36,6 +36,7 @@
 /* Custom CSS imports */
 @import url("./theme/core-class.scss");
 @import url("./theme/ion-class.scss");
+@import url("./theme/variables.scss");
 
 body {
 	margin: 0;
@@ -48,4 +49,23 @@ html.md {
 
 .text-white {
 	color: #fff !important;
+}
+
+.star-container.space-no,
+.rating.space-no .star-container {
+	justify-content: start !important;
+	margin-left: 0 !important;
+}
+
+.read-now-fab-btn {
+	width: 150px;
+	--border-radius: var(--radius-md);
+}
+
+.favourite-fab-btn {
+	--border-radius: var(--radius-md);
+}
+
+.modal-header-icon ion-icon {
+	font-size: 24px;
 }
