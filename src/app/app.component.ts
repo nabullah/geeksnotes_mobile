@@ -9,10 +9,10 @@ import { SignalService } from "./core/services/signal.service";
 })
 export class AppComponent {
 	constructor(private readonly router: Router, private readonly signalService: SignalService) {
-		this.router.events.subscribe((event: any) => {
-			if (event instanceof NavigationEnd) {
-				this.signalService.setCurrentRoute(event.url);
-			}
-		});
+		// this.router.events.subscribe((event: any) => {
+		// 	if (event instanceof NavigationEnd) {
+		// 		this.signalService.setCurrentRoute(event.url);
+		// 	}
+		// });
 	}
 }

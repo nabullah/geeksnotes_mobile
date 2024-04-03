@@ -25,6 +25,10 @@ ion-button {
 	top: 13px;
 }
 
+.professional-modal .searchbar-input.sc-ion-searchbar-md {
+	border: none;
+}
+
 ion-toolbar .sc-ion-searchbar-ios-h {
 	padding-top: 8px;
 	padding-bottom: 8px;
@@ -61,6 +65,14 @@ ion-modal {
 	}
 
 	&::part(content) {
-		border-radius: var(--radius-xl);
+		border-top-left-radius: var(--radius-xl);
+		border-top-right-radius: var(--radius-xl);
+	}
+}
+
+.menu-list {
+	ion-button {
+		--padding-top: 20px;
+		--padding-bottom: 20px;
 	}
 }

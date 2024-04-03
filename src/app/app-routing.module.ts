@@ -20,7 +20,7 @@ const routes: Routes = [
 		loadChildren: () => import("./pages/search/search.module").then((m) => m.SearchPageModule),
 	},
 	{
-		path: "note-detail/:id",
+		path: "note-detail",
 		loadChildren: () => import("./pages/note-details/note-details.module").then((m) => m.NoteDetailsPageModule),
 	},
 ];

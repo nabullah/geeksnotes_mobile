@@ -6,7 +6,6 @@
 		<ion-buttons slot="end" id="open-modal-report" expand="block">
 			<ion-icon name="ellipsis-horizontal" class="mr-2"></ion-icon>
 		</ion-buttons>
-
 	</ion-toolbar>
 </ion-header>
 
@@ -37,7 +36,7 @@
 				</div>
 			</ion-col>
 			<ion-col size="4">
-				<ion-thumbnail class="thumbnail">
+				<ion-thumbnail class="thumbnail w-full h-full">
 					<img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
 				  </ion-thumbnail>
 			</ion-col>
@@ -66,16 +65,16 @@
 			</ion-col>
 			<ion-col size="12">
 				<hr />
-				<div class="reviews mt-3">
+				<div class="reviews mt-3 mb-[70px]">
 					<div class="flex justify-between">
 						<ion-text class="text-base font-medium block mb-2">Reviews</ion-text>
-						<ion-text class="text-sm font-medium flex items-center mb-2">2 Reviews <ion-icon name="chevron-forward"></ion-icon></ion-text>
+						<ion-text class="text-sm font-medium flex items-center mb-2" [routerLink]="['/note-detail/0/reviews']" routerLinkActive="router-link-active" >3 Reviews <ion-icon name="chevron-forward"></ion-icon></ion-text>
 					</div>
 					@for (item of [1,2,3]; track $index) {
 						<div class="my-2">
 							<ion-row>
 								<ion-col size="2">
-									<ion-thumbnail class="profile-image">
+									<ion-thumbnail class="profile-image flex justify-center items-center rounded-full bg-zinc-600 text-slate-200">
 										<!-- <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" /> -->
 										<ion-text class="reviewer-name text-base font-medium block">NA</ion-text>
 		
@@ -100,10 +99,10 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-	<div class="backdrop-blur-sm bg-white/30 flex gap-4 py-1 fixed bottom-0 left-0 right-0 justify-center">
+	<div class="backdrop-blur-sm bg-white/30 flex gap-4 py-1 fixed bottom-0 left-0 right-0 justify-center px-4 pb-2">
 		<ion-fab-button type="button" class="read-now-fab-btn">
 			<ion-icon name="document-text" class="mr-2" size="small"></ion-icon>
-			<ion-text>Read Now</ion-text>
+			<ion-text class="uppercase font-medium text-sm">Read Now</ion-text>
 		</ion-fab-button>
 		  <ion-fab-button type="button" class="favourite-fab-btn">
 			<ion-icon name="bookmark" color="danger"></ion-icon>

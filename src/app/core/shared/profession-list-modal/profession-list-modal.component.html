@@ -1,0 +1,14 @@
+<div class="wrapper">
+	<ion-list>
+		<div class="">
+			@for (item of allProfessions | filter: filterProfessional; track item.id) {
+			<ion-item class="ion-activatable ripple-parent" (click)="selectedProfession(item)">
+				<ion-ripple-effect class="primary-ripple"></ion-ripple-effect>
+				<ion-label class="pl-4">
+					<h2>{{ item.roleType }}</h2>
+				</ion-label>
+			</ion-item>
+			}
+		</div>
+	</ion-list>
+</div>

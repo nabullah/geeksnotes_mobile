@@ -5,8 +5,12 @@ import { NoteDetailsPage } from "./note-details.page";
 
 const routes: Routes = [
 	{
-		path: "",
+		path: ":id",
 		component: NoteDetailsPage,
+	},
+	{
+		path: ":id/reviews",
+		loadChildren: () => import("./reviews/reviews.module").then((m) => m.ReviewsPageModule),
 	},
 ];
 
