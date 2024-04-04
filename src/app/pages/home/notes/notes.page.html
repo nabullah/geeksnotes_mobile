@@ -15,7 +15,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<app-notes-listing [notes]=""></app-notes-listing>
+	<ion-refresher slot="fixed" (ionRefresh)="handleNoteAPIRefresh($event)">
+		<ion-refresher-content pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
+	</ion-refresher>
+	@if (isLoaderActive) {
+	<div class="flex items-center justify-center h-[300px]">
+		<app-loader></app-loader>
+	</div>
+	}@else {
+	<app-notes-listing [notes]="allNotesList"></app-notes-listing>
+
+	}
 </ion-content>
 
 <ion-modal #sortByModal trigger="open-modal-filter" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.50]">

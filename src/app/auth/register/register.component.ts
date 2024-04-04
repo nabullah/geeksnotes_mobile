@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { IonModal } from "@ionic/angular/common";
 import { inOutAnimation, swipeAnimation } from "src/app/core/animations/swipe.animation";
 import { APPCONSTANTS } from "src/app/core/constants/app.constants";
-import { APIResponse, AllUserRoles, RegistrationStep1, RegistrationStep2 } from "src/app/core/interface";
+import { APIResponse, AllUserRoles, RegistrationStep2 } from "src/app/core/interface";
 import { RoutesPath } from "src/app/core/routes/routes";
 import { ApiService } from "src/app/core/services/api.service";
 import { StorageService } from "src/app/core/services/storage.service";
@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
 		this.allUserRoles = [];
 		this.submitted = false;
 		this.isLoaderActive = false;
-		this.formIndex = 4;
+		this.formIndex = 1;
 		this.swipeDirection = 0;
 		this.userId = 0;
 		this.filterSearchText = "";
@@ -108,6 +108,7 @@ export class RegisterComponent implements OnInit {
 			error: (err) => {
 				console.log(err);
 				this.toastService.presentToastError("top", err.error.message);
+				this.isLoaderActive = false;
 			},
 			complete: () => {
 				this.isLoaderActive = false;
@@ -118,7 +119,6 @@ export class RegisterComponent implements OnInit {
 	public selectGraduationDate(event: CustomEvent): void {
 		this.registerFormTwo.controls["graduationDate"].setValue(new Date(event.detail.value).toDateString());
 		this.registerFormTwo.controls["graduationYear"].setValue(new Date(event.detail.value).getFullYear());
-
 	}
 
 	public selectGraduationYear(event: CustomEvent): void {
@@ -137,16 +137,17 @@ export class RegisterComponent implements OnInit {
 		this.isLoaderActive = true;
 		const payload = {
 			...this.registerFormTwo.value,
-			userId: 28,
+			userId: this.userId,
 		};
 		this.apiService.registrationStep2(payload).subscribe({
 			next: (res: APIResponse<RegistrationStep2>) => {
 				if (res.status) {
 					this.registerForm.reset();
 					this.registerFormTwo.reset();
-					this.toastService.presentToastSuccess("top", res.message);
-					this.router.navigate([RoutesPath.Dashboard]);
 					this.storageService.set(APPCONSTANTS.USER, res.data);
+					this.storageService.remove(APPCONSTANTS.TEMP_EMAIL);
+					this.router.navigate([RoutesPath.Dashboard]);
+					this.toastService.presentToastSuccess("top", res.message);
 				} else {
 					this.toastService.presentToastError("top", res.message);
 				}
@@ -154,6 +155,7 @@ export class RegisterComponent implements OnInit {
 			error: (err) => {
 				console.log(err);
 				this.toastService.presentToastError("top", err.error.message);
+				this.isLoaderActive = false;
 			},
 			complete: () => {
 				this.isLoaderActive = false;
@@ -175,6 +177,7 @@ export class RegisterComponent implements OnInit {
 			error: (err) => {
 				console.log(err);
 				this.toastService.presentToastError("bottom", err.error.message);
+				this.isLoaderActive = false;
 			},
 			complete: () => {
 				this.isLoaderActive = false;
@@ -183,11 +186,20 @@ export class RegisterComponent implements OnInit {
 	}
 
 	public getProfessionsList(): void {
+		this.isLoaderActive = true;
 		this.apiService.getAllUserRoles().subscribe({
 			next: (res: APIResponse<AllUserRoles[]>) => {
 				if (res.status) {
 					this.allUserRoles = res.data;
 				}
+			},
+			error: (err) => {
+				console.log(err);
+				this.toastService.presentToastError("bottom", err.error.message);
+				this.isLoaderActive = false;
+			},
+			complete: () => {
+				this.isLoaderActive = false;
 			},
 		});
 	}

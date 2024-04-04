@@ -7,8 +7,8 @@
 <ion-content>
 	<div class="flex justify-between items-center p-4 varying-stripes-bg">
 		<div class="flex flex-col gap-1">
-			<ion-text class="reviewer-name text-xl font-medium block">Nabullah Ansari</ion-text>
-			<ion-text class="text-sm font-normal">Bachelor's Degree (Anthropology)</ion-text>
+			<ion-text class="reviewer-name text-xl font-medium block">{{user?.fullName}}</ion-text>
+			<ion-text class="text-sm font-normal">{{user?.profession}}</ion-text>
 		</div>
 		<div class="rounded-full ring-1 ring-slate-500 p-1">
 			<ion-thumbnail class="profile-image flex justify-center items-center rounded-full bg-zinc-600 text-slate-200 w-[58px] h-[58px]">
@@ -21,21 +21,21 @@
 	<!-- ion-button> -->
 	<div class="bg-slate-600 p-2 m-3 text-slate-200 rounded flex items-center justify-between">
 		<ion-text color="danger" class="text-xl font-medium">Member since</ion-text>
-		<ion-text color="light" class="text-sm">4th April 2022</ion-text>
+		<ion-text color="light" class="text-sm">{{user?.createdAt | date: 'longDate'}}</ion-text>
 	</div>
 	<div class="my-3">
 		<ion-buttons slot="start" class="flex-col menu-list">
 			<ion-button class="w-full">
 				<ion-icon slot="start" name="grid"></ion-icon>
 				<div class="flex justify-between items-center w-full">
-					<ion-text class="capitalize text-lg">Dashboard</ion-text>
+					<ion-text class="capitalize text-sm">Dashboard</ion-text>
 					<ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
 				</div>
 			</ion-button>
 			<ion-button class="w-full">
 				<ion-icon slot="start" name="settings"></ion-icon>
 				<div class="flex justify-between items-center w-full">
-					<ion-text class="capitalize text-lg">Settings</ion-text>
+					<ion-text class="capitalize text-sm">Settings</ion-text>
 					<ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
 				</div>
 			</ion-button>
@@ -44,7 +44,7 @@
 	<div class="fixed bottom-0 left-0 right-0 justify-center mb-3">
 		<ion-button type="button" expand="full" color="danger">
 			<ion-icon name="log-out" class="mr-2" size="small"></ion-icon>
-			<ion-text class="uppercase font-medium text-sm">Logout</ion-text>
+			<ion-text class="uppercase font-medium text-sm" (click)="logout()">Logout</ion-text>
 		</ion-button>
 	</div>
 </ion-content>

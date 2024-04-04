@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button defaultHref="/"></ion-back-button>
 		</ion-buttons>
-		<ion-searchbar placeholder="Search" [debounce]="500" (ionInput)="handleSearchInput($event)" animated="true" #search id="search-input"></ion-searchbar>
+		<ion-searchbar placeholder="Search" [debounce]="500" (ionInput)="handleSearchInput($event)" animated="true" #searchBar id="search-input"></ion-searchbar>
 	</ion-toolbar>
 </ion-header>
 
@@ -17,7 +17,6 @@
 		<ion-chip class="text-[14px] px-[10px] py-[2px] bg-slate-600 text-slate-100">{{item}}</ion-chip>
 		}
 	</div>
-
 	<div class="recent-downloads">
 		<ion-card color="light">
 			<ion-card-header color="tertiary">

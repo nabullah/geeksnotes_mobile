@@ -1,7 +1,8 @@
-import { Component, EventEmitter, OnInit, Output, Renderer2 } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, QueryList, ViewChildren, input } from "@angular/core";
 import { ApiService } from "../../services/api.service";
 import { APPCONSTANTS } from "../../constants/app.constants";
-import { SignalService } from "../../services/signal.service";
+import { StorageService } from "../../services/storage.service";
+import { ToastService } from "../../services/toast.service";
 
 @Component({
 	selector: "app-one-time-password",
@@ -12,18 +13,30 @@ export class OneTimePasswordComponent implements OnInit {
 	@Output() getOTP: EventEmitter<string> = new EventEmitter<string>();
 
 	public readonly inputs: string[] = ["input1", "input2", "input3", "input4", "input5", "input6"];
-	private readonly currentInputIndex: number = 0;
-	public inputValues: string[] = ["", "", "", "", "", ""];
-	private finalValues!: string;
-	public isResendOTP: boolean = false;
+	public inputValues: string[];
+	public finalValues!: string;
+	public isResendOTP: boolean;
 
-	public timer: number = 300;
-	public minutes: string = "00";
-	public seconds: string = "00";
-	public timerExpired: boolean = false;
+	public timer: number;
+	public minutes: string;
+	public seconds: string;
+	public timerExpired: boolean;
 	public timerInterval: any;
 
-	constructor(private readonly renderer: Renderer2, private readonly apiService: ApiService, private readonly signalService: SignalService) {}
+	public isLoaderActive: boolean;
+	@ViewChildren("input") inputElements!: QueryList<any>;
+
+	constructor(private readonly apiService: ApiService, private readonly storageService: StorageService, private readonly toastService: ToastService) {
+		this.isLoaderActive = false;
+
+		this.inputValues = ["", "", "", "", "", ""];
+		this.isResendOTP = false;
+
+		this.timer = 300;
+		this.minutes = "00";
+		this.seconds = "00";
+		this.timerExpired = false;
+	}
 
 	ngOnInit(): void {
 		this.startTimer();
@@ -41,27 +54,39 @@ export class OneTimePasswordComponent implements OnInit {
 	}
 
 	private tabChange(index: number): void {
-		const inputElements = document.querySelectorAll("input");
-		this.inputValues[index] = inputElements[index].value;
-		if (inputElements[index] && inputElements[index].value !== "") {
-			this.focusElement(inputElements[index + 1]);
-		} else if (inputElements[index] && inputElements[index].value === "") {
-			this.focusElement(inputElements[index - 1]);
+		const inputElementArray = this.inputElements.toArray();
+		if (index !== 5 && inputElementArray[index + 1] && inputElementArray[index + 1].value !== "") {
+			this.focusElement(inputElementArray[index + 1]);
+		} else {
+			this.focusElement(inputElementArray[index]);
 		}
 	}
 
-	private focusElement(element: HTMLElement): void {
-		this.finalValues = this.inputValues.join("");
-		if (element) {
-			this.renderer.selectRootElement(element).focus();
+	public onBackspace(event: any, index: number) {
+		if (event.code === "Backspace") {
+			const inputElementArray = this.inputElements.toArray();
+			if (this.inputElements && inputElementArray.length > 0 && inputElementArray[index - 1]) {
+				if (inputElementArray[index].nativeElement.value === "") {
+					inputElementArray[index - 1].nativeElement.value = "";
+					this.focusElement(inputElementArray[index - 1]);
+				}
+			}
 		}
+	}
+	private focusElement(element: any): void {
+		const inputElementArray = this.inputElements.toArray();
+		inputElementArray.forEach((input, i) => {
+			this.inputValues[i] = input.nativeElement.value;
+		});
+		this.finalValues = this.inputValues.join("");
+		element.nativeElement.focus();
 	}
 
 	public submitOTP() {
 		if (this.finalValues && this.finalValues.split("").length === 6) {
 			this.getOTP.emit(this.finalValues);
 		} else {
-			// this.sweetAlertService.sendNotification("error", "One Time Password must be of 6 digits characters");
+			this.toastService.presentToastError("bottom", "One Time Password must be of 6 digits characters");
 		}
 	}
 
@@ -80,23 +105,23 @@ export class OneTimePasswordComponent implements OnInit {
 				this.timer--;
 			} else {
 				clearInterval(this.timerInterval);
-				// alert('Timer expired!');
 				this.timerExpired = true;
 			}
 		}, 1000);
 	}
 
-	public resendOTP() {
-		this.apiService.resendOTP({ email: <string>"" }).subscribe({
+	public async resendOTP() {
+		const email = await this.storageService.get(APPCONSTANTS.TEMP_EMAIL);
+		this.apiService.resendOTP({ email: email }).subscribe({
 			next: (response: any) => {
 				if (response.status) {
 					this.isResendOTP = true;
 					this.timerExpired = false;
 					this.resetTimer();
 					this.startTimer();
-					// this.sweetAlertService.sendNotification("success", response.message);
+					this.toastService.presentToastSuccess("top", response.message);
 				} else {
-					// this.sweetAlertService.sendNotification("error", response.message);
+					this.toastService.presentToastError("top", response.message);
 				}
 			},
 		});

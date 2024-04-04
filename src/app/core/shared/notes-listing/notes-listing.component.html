@@ -1,12 +1,13 @@
+@if (notes.length > 0) {
 <ion-grid>
 	<ion-row>
-		@for (item of [1,2,3,4,5]; track $index) {
+		@for (note of notes; track $index) {
 		<ion-col size="6" sizeSm="4">
 			<ion-nav-link router-direction="forward" [component]="NoteDetailsComponent">
 				<ion-card class="mx-0" (click)="openDetailsPage($index)">
 					<img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" class="h-[200px]" />
-					<ion-card-header class="px-[8px] py-[12px]">
-						<ion-card-subtitle class="truncate-two">All about PDF express can be found in the document. PDF.js is used for viewing PDF files.</ion-card-subtitle>
+					<ion-card-header class="px-[8px] py-[12px] h-[66px]">
+						<ion-card-subtitle class="truncate-two">{{ note.fileName }}</ion-card-subtitle>
 					</ion-card-header>
 				</ion-card>
 			</ion-nav-link>
@@ -14,3 +15,6 @@
 		}
 	</ion-row>
 </ion-grid>
+} @else {
+<div class="flex items-center justify-center h-full text-lg">{{ noDataTitle }}</div>
+}
