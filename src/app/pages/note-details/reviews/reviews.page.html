@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-buttons slot="end" id="open-modal-sortby" expand="block">
+			<ion-icon name="ellipsis-horizontal" class="mr-2"></ion-icon>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<ion-grid>
+		<ion-row>
+			<ion-col size="12">
+				<div class="reviews mt-3 mb-[70px]">
+					<div class="flex justify-between">
+						<ion-text class="text-base font-medium block mb-2">Reviews</ion-text>
+					</div>
+					@for (item of [1,2,3]; track $index) {
+					<div class="my-2">
+						<ion-row>
+							<ion-col size="2">
+								<ion-thumbnail class="profile-image flex justify-center items-center rounded-full bg-zinc-600 text-slate-200">
+									<!-- <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" /> -->
+									<ion-text class="reviewer-name text-base font-medium block">NA</ion-text>
+								</ion-thumbnail>
+							</ion-col>
+							<ion-col size="10">
+								<ion-text class="reviewer-name text-base font-medium block mb-1">Reviewer-name</ion-text>
+								<ion-text class="review-text text-sm font-normal block mb-1">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt, consectetur?</ion-text>
+
+								<div class="flex justify-between mt-2">
+									<ion-text class="reviewer-name text-sm font-medium">2 years ago</ion-text>
+									<div class="flex gap-2 items-center">
+										<ion-icon name="thumbs-up-outline" class="text-base"></ion-icon>
+										<ion-text class="text-sm font-medium">10 </ion-text>
+									</div>
+								</div>
+							</ion-col>
+						</ion-row>
+					</div>
+					}
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<div class="backdrop-blur-sm bg-white/30 flex gap-4 py-1 fixed bottom-0 left-0 right-0 justify-center px-4 pb-2">
+		<ion-fab-button type="button" class="read-now-fab-btn" [routerLink]="['/note-detail/0/reviews/create']" routerLinkActive="router-link-active">
+			<ion-icon name="create" class="mr-2" size="small"></ion-icon>
+			<ion-text class="uppercase font-medium text-sm">Add a Review</ion-text>
+		</ion-fab-button>
+	</div>
+</ion-content>
+
+<ion-modal #sortByModal trigger="open-modal-sortby" [initialBreakpoint]="0.50" [breakpoints]="[0, 0.50]">
+	<ng-template>
+		<ion-content class="ion-padding">
+			<div class="flex gap-3 items-center modal-header-icon">
+				<ion-icon name="filter-circle"></ion-icon>
+				<ion-text class="text-lg font-semibold">Filter</ion-text>
+			</div>
+		</ion-content>
+	</ng-template>
+</ion-modal>

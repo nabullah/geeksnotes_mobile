@@ -4,7 +4,8 @@ import { Injectable, signal } from "@angular/core";
 	providedIn: "root",
 })
 export class SignalService {
-	currentRoute = signal<string>("");
+	public currentRoute = signal<string>("");
+
 	constructor() {}
 
 	setCurrentRoute(route: string) {

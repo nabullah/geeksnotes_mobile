@@ -15,4 +15,8 @@ export enum RoutesPath {
 	Profile = "/home/profile",
 
 	Search = "/search",
+
+	NotesDetails = "/note-detail",
+	NotesDetailsReviews = "/reviews",
+	NotesDetailsReviewsCreate = "/reviews/create",
 }

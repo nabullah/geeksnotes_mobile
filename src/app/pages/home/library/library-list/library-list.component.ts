@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { NO_DATA } from "src/app/core/enum/app.enum";
 
 @Component({
 	selector: "app-library-list",
@@ -6,5 +7,8 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./library-list.component.scss"],
 })
 export class LibraryListComponent {
+	public notes = [];
+	public readonly noDataEnum = NO_DATA;
+
 	constructor() {}
 }

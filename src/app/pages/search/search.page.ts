@@ -6,8 +6,8 @@ import { IonInput, IonSearchbar, SearchbarCustomEvent } from "@ionic/angular";
 	templateUrl: "./search.page.html",
 	styleUrls: ["./search.page.scss"],
 })
-export class SearchPage implements OnInit {
-	@ViewChild("searchbar", { static: false, read: IonSearchbar }) searchbar!: IonSearchbar;
+export class SearchPage {
+	@ViewChild("searchBar", { static: false, read: IonSearchbar }) searchBar!: IonSearchbar;
 
 	popularSearches: string[];
 	searchQuery: string;
@@ -16,10 +16,8 @@ export class SearchPage implements OnInit {
 		this.searchQuery = "";
 	}
 
-	ngOnInit() {}
-
 	ionViewDidEnter() {
-		this.searchbar?.setFocus();
+		this.searchBar?.setFocus();
 	}
 
 	handleSearchInput(event: SearchbarCustomEvent) {
