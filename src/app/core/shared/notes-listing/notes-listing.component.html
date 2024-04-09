@@ -4,8 +4,12 @@
 		@for (note of notes; track $index) {
 		<ion-col size="6" sizeSm="4">
 			<ion-nav-link router-direction="forward" [component]="NoteDetailsComponent">
-				<ion-card class="mx-0" (click)="openDetailsPage($index)">
-					<img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" class="h-[200px]" />
+				<ion-card class="mx-0" (click)="openDetailsPage(note.id)">
+					<img
+						[alt]="note.topic"
+						[src]="note.thumbnail ? note.thumbnail.thumbnailPath : './assets/icon/default-thumbnail-png.svg'"
+						class="h-[200px]"
+					/>
 					<ion-card-header class="px-[8px] py-[12px] h-[66px]">
 						<ion-card-subtitle class="truncate-two">{{ note.topic }}</ion-card-subtitle>
 					</ion-card-header>

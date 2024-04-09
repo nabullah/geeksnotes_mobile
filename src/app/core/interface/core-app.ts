@@ -55,6 +55,13 @@ export interface Notes {
 	likes: number;
 	views: { fileId: number; views: number };
 	tags: string;
+	thumbnail: FileThumbnail;
+}
+
+export interface FileThumbnail {
+	id: number;
+	thumbnailPath: string;
+	fileId: number;
 }
 
 export interface User {

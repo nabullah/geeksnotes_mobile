@@ -44,7 +44,7 @@ export class ApiService {
 	getFilesWithUserId(page: number, limit: number): Observable<APIResponse<string>> {
 		return this.http.get<APIResponse<string>>(`${APIURLS.GetFilesWithUserId}?page=${page}&limit=${limit}`);
 	}
-	getNoteById(id: string): Observable<APIResponse<string>> {
+	getNoteById(id: number): Observable<APIResponse<string>> {
 		return this.http.get<APIResponse<string>>(`${APIURLS.GetNoteById}?id=${id}`);
 	}
 

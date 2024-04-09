@@ -10,7 +10,7 @@ export class ToastService {
 	async presentToastSuccess(position: "bottom" | "top" | "middle", message: string) {
 		const toast = await this.toastController.create({
 			message: message,
-			duration: 5000,
+			duration: 3000,
 			position: position,
 			color: "success",
 		});
@@ -21,7 +21,7 @@ export class ToastService {
 	async presentToastError(position: "bottom" | "top" | "middle", message: string) {
 		const toast = await this.toastController.create({
 			message: message,
-			duration: 5000,
+			duration: 3000,
 			position: position,
 			color: "danger",
 		});
@@ -32,7 +32,7 @@ export class ToastService {
 	async presentToastCustom(color: string, position: "bottom" | "top" | "middle", message: string) {
 		const toast = await this.toastController.create({
 			message: message,
-			duration: 5000,
+			duration: 3000,
 			position: position,
 			color: color,
 		});

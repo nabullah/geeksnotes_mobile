@@ -10,11 +10,14 @@ import { Notes } from "../../interface";
 	styleUrls: ["./notes-listing.component.scss"],
 })
 export class NotesListingComponent {
-	@Input() notes: Notes[] = [];
-	@Input() noDataTitle: string = "";
+	@Input() notes: Notes[];
+	@Input() noDataTitle: string;
 	public NoteDetailsComponent = NoteDetailsPage;
 
-	constructor(private readonly router: Router) {}
+	constructor(private readonly router: Router) {
+		this.notes = [];
+		this.noDataTitle = "";
+	}
 
 	openDetailsPage(noteId: number) {
 		this.router.navigate([RoutesPath.NotesDetails, noteId]);

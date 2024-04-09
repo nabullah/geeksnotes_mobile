@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+	<ion-toolbar color="primary">
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-buttons slot="end" id="open-modal-report" expand="block">
+			<ion-icon name="ellipsis-horizontal" class="mr-2"></ion-icon>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	@if(isLoaderActive) {
+	<div class="flex items-center justify-center h-[300px]">
+		<app-loader></app-loader>
+	</div>
+	}
+	<app-pdf-viewer [source]="notesDetail.filePath" [renderText]="true" [originalSize]="true" (loadingPDFProgress)="afterPDFLoaded($event)" (errorResponse)="onPDFLoadError($event)">
+	</app-pdf-viewer>
+</ion-content>

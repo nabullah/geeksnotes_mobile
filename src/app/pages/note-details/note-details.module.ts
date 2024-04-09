@@ -8,9 +8,11 @@ import { NoteDetailsPageRoutingModule } from "./note-details-routing.module";
 
 import { NoteDetailsPage } from "./note-details.page";
 import { StarRatingModule } from "angular-star-rating";
+import { SharedModule } from "src/app/core/shared/shared.module";
+import { ViewNoteComponent } from "./view-note/view-note.component";
 
 @NgModule({
-	imports: [CommonModule, FormsModule, IonicModule, NoteDetailsPageRoutingModule, StarRatingModule.forRoot()],
-	declarations: [NoteDetailsPage],
+	imports: [CommonModule, FormsModule, IonicModule, NoteDetailsPageRoutingModule, StarRatingModule.forRoot(), SharedModule],
+	declarations: [NoteDetailsPage, ViewNoteComponent],
 })
 export class NoteDetailsPageModule {}
