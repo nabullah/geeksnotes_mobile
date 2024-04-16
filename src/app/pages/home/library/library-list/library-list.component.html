@@ -1,1 +1,7 @@
-<app-notes-listing [notes]="notes" [noDataTitle]="noDataEnum.LibraryList"></app-notes-listing>
+@if (isLoaderActive) {
+<div class="flex items-center justify-center h-[300px]">
+	<app-loader></app-loader>
+</div>
+}@else {
+<app-notes-listing [notes]="libraryNotesList" [noDataTitle]="noDataEnum.LibraryList"></app-notes-listing>
+}

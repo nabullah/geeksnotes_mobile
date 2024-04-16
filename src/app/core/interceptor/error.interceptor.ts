@@ -21,7 +21,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 					toaster.presentToastError("top", HTTP_ERROR_MESSAGES.BadRequest);
 				} else if (error.status === HTTP_ERROR_CODE.Unauthorized) {
 					toaster.presentToastError("top", HTTP_ERROR_MESSAGES.Unauthorized);
-					// window.open(this.redirectUrl + `login?ref=${window.location.pathname}`, "_self");
 				} else if (error.status === HTTP_ERROR_CODE.Forbidden) {
 					toaster.presentToastError("top", HTTP_ERROR_MESSAGES.Forbidden);
 				} else if (error.status === HTTP_ERROR_CODE.NotFound) {

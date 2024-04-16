@@ -1,8 +1,8 @@
 import { StorageService } from "src/app/core/services/storage.service";
-import { User } from "./../../../core/interface/core-app";
 import { Component, OnInit } from "@angular/core";
 import { APPCONSTANTS } from "src/app/core/constants/app.constants";
 import { CommonService } from "src/app/core/services/common.service";
+import { User } from "src/app/core/models/user.model";
 
 @Component({
 	selector: "app-profile",
@@ -12,7 +12,7 @@ import { CommonService } from "src/app/core/services/common.service";
 export class ProfilePage {
 	public user: User | null;
 	constructor(private readonly storageService: StorageService, private readonly commonService: CommonService) {
-		this.user = null;
+		this.user = new User();
 	}
 
 	async ionViewWillEnter() {

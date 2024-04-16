@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { RoutesPath } from "../../routes/routes";
 import { NoteDetailsPage } from "src/app/pages/note-details/note-details.page";
-import { Notes } from "../../interface";
+import { Notes } from "../../models";
 
 @Component({
 	selector: "app-notes-listing",
@@ -10,11 +10,14 @@ import { Notes } from "../../interface";
 	styleUrls: ["./notes-listing.component.scss"],
 })
 export class NotesListingComponent {
-	@Input() notes: Notes[] = [];
-	@Input() noDataTitle: string = "";
+	@Input() notes: Notes[];
+	@Input() noDataTitle: string;
 	public NoteDetailsComponent = NoteDetailsPage;
 
-	constructor(private readonly router: Router) {}
+	constructor(private readonly router: Router) {
+		this.notes = [];
+		this.noDataTitle = "";
+	}
 
 	openDetailsPage(noteId: number) {
 		this.router.navigate([RoutesPath.NotesDetails, noteId]);

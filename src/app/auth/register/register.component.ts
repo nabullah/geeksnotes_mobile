@@ -7,6 +7,8 @@ import { APPCONSTANTS } from "src/app/core/constants/app.constants";
 import { APIResponse, AllUserRoles, RegistrationStep2 } from "src/app/core/interface";
 import { RoutesPath } from "src/app/core/routes/routes";
 import { ApiService } from "src/app/core/services/api.service";
+import { CommonService } from "src/app/core/services/common.service";
+import { SignalService } from "src/app/core/services/signal.service";
 import { StorageService } from "src/app/core/services/storage.service";
 import { ToastService } from "src/app/core/services/toast.service";
 
@@ -39,7 +41,9 @@ export class RegisterComponent implements OnInit {
 		private readonly router: Router,
 		private readonly apiService: ApiService,
 		private readonly toastService: ToastService,
-		private readonly storageService: StorageService
+		private readonly storageService: StorageService,
+		private readonly commonService: CommonService,
+		private readonly signalService: SignalService,
 	) {
 		this.allUserRoles = [];
 		this.submitted = false;
@@ -140,13 +144,17 @@ export class RegisterComponent implements OnInit {
 			userId: this.userId,
 		};
 		this.apiService.registrationStep2(payload).subscribe({
-			next: (res: APIResponse<RegistrationStep2>) => {
+			next: (res: APIResponse<any>) => {
 				if (res.status) {
 					this.registerForm.reset();
 					this.registerFormTwo.reset();
-					this.storageService.set(APPCONSTANTS.USER, res.data);
+					this.storageService.set(APPCONSTANTS.USER_ID, res.data.user.id);
+					this.storageService.set(APPCONSTANTS.USER, res.data.user);
+					this.storageService.set(APPCONSTANTS.TOKEN, res.data.token);
+					this.commonService.setUserLoggedIn(true);
+					this.signalService.getUserObject.set(res.data.user);
 					this.storageService.remove(APPCONSTANTS.TEMP_EMAIL);
-					this.router.navigate([RoutesPath.Dashboard]);
+					this.router.navigate([RoutesPath.Notes]);
 					this.toastService.presentToastSuccess("top", res.message);
 				} else {
 					this.toastService.presentToastError("top", res.message);
@@ -172,6 +180,7 @@ export class RegisterComponent implements OnInit {
 					this.formIndex = 4;
 				} else {
 					this.toastService.presentToastError("bottom", res.message);
+					this.isLoaderActive = false;
 				}
 			},
 			error: (err) => {

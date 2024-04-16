@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 const baseUrl = "http://localhost:8000";
-// const baseUrl = 'https://geeksnotes-backend.onrender.com';
+// const baseUrl = 'https://geeks-notes.glitch.me';
 
 export const environment = {
 	production: false,
 	API_URL: baseUrl + "/api",
-	SECRET_KEY: "sdfsdvsd2345tfvzds34t3_asfs fsadf@^&SDFSDF34567&*(*)$%sdfg852sfdd1dsg65132doluikjhg32",
+	SECRET_KEY: "RveV83H26wzK40sXfN57QJ2Z6TlMxuVLoZklxX3Y5inrOTfGvOx9Y71Bq4cH2D8o9wI3U0M6O8E5L2dP4sG6W9I4O3E2Y5fNrK1V8J6Q9o7E4Y1xT0o3Z5F8j1",
 	baseUrl: baseUrl,
 
 	firebaseConfig: {

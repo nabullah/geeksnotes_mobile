@@ -27,7 +27,7 @@ export class LibraryPage {
 		this.segments = this.segmentsEnum.Library;
 	}
 
-	public segmentChanged(event: SegmentCustomEvent) {
+	public segmentChanged(event: SegmentCustomEvent): void {
 		if (event.detail.value === this.segmentsEnum.Recents) {
 			this.router.navigate([RoutesPath.LibraryRecents]);
 			this.segments = this.segmentsEnum.Recents;
@@ -37,11 +37,11 @@ export class LibraryPage {
 		}
 	}
 
-	public routeToSearch() {
+	public routeToSearch(): void {
 		this.router.navigate([RoutesPath.Search]);
 	}
 
-	public openSortByModal() {
+	public openSortByModal(): void {
 		this.sortByModal.present();
 	}
 }

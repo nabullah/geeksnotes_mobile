@@ -3,36 +3,47 @@
 		<ion-buttons slot="start">
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-text class="uppercase text-sm font-medium">Add a review</ion-text>
+		<ion-text class="uppercase text-sm font-medium ml-2">Add a review</ion-text>
 		<ion-buttons slot="end">
-			<!-- <ion-icon name="ellipsis-horizontal" class="mr-2"></ion-icon> -->
-			<ion-button>Post</ion-button>
+			@if (!isUpdateReviewActive) {
+			<ion-button (click)="createReview()"> <ion-icon name="create-outline" class="mr-1 mb-1"></ion-icon>Post</ion-button>
+			}@else {
+			<ion-button (click)="updateReview()"> <ion-icon name="create-outline" class="mr-1 mb-1"></ion-icon>Update Post</ion-button>
+			}
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<!-- < -->
-	<ion-grid>
-		<ion-row>
-			<ion-col size="12">
-				<div class="text-center my-4">
-					<ion-text class="text-lg font-medium">Tap to rate this note</ion-text>
-					<div class="mt-3">
-						<star-rating [starType]="'svg'" [showHalfStars]="true" [size]="'large'"></star-rating>
-					</div>
+	<form [formGroup]="postReviewForm">
+		<ion-grid>
+			<ion-row>
+				@if(isLoaderActive) {
+				<div class="flex items-center justify-center h-[300px] w-full">
+					<app-loader></app-loader>
 				</div>
-			</ion-col>
-			<ion-col size="12">
-				<textarea
-					rows="20"
-					type="text"
-					class="h-full mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
-					placeholder="Leave a detailed review to support the publisher."
-					aria-label="place"
-					aria-describedby="place-addon"
-				></textarea>
-			</ion-col>
-		</ion-row>
-	</ion-grid>
+				}@else {
+				<ion-col size="12">
+					<div class="text-center my-4">
+						<ion-text class="text-lg font-medium">Tap to rate this note</ion-text>
+						<div class="mt-3">
+							<star-rating-control [starType]="'svg'" [showHalfStars]="true" [size]="'large'" formControlName="rating"></star-rating-control>
+						</div>
+					</div>
+				</ion-col>
+				<ion-col size="12">
+					<textarea
+						formControlName="reviewText"
+						rows="20"
+						type="text"
+						class="h-full mt-1 block w-full px-3 py-[12px] bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+						placeholder="Leave a detailed review to support the publisher."
+						aria-label="place"
+						aria-describedby="place-addon"
+					></textarea>
+				</ion-col>
+				}
+			</ion-row>
+		</ion-grid>
+	</form>
 </ion-content>

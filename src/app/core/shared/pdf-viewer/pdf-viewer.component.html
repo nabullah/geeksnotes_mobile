@@ -1,0 +1,21 @@
+<ion-content>
+	<pdf-viewer
+		[src]="source"
+		[render-text]="renderText"
+		[original-size]="originalSize"
+		[page]="page"
+		[stick-to-page]="stickToPage"
+		[show-all]="showAll"
+		[fit-to-page]="fitToPage"
+		[autoresize]="autoresize"
+		[show-borders]="showBorders"
+		[ngStyle]="{ width: width, height: height }"
+		(after-load-complete)="afterLoadComplete($event)"
+		(page-rendered)="pageRendered($event)"
+		(pages-initialized)="pageInitialized($event)"
+		(text-layer-rendered)="textLayerRendered($event)"
+		(error)="onErrorOccured($event)"
+		(on-progress)="onProgress($event)"
+		[zoom]="zoomValue"
+	></pdf-viewer>
+</ion-content>

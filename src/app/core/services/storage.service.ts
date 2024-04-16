@@ -37,7 +37,7 @@ export class StorageService {
 	}
 
 	/**To get all keys stored */
-	public async getAllKEeys() {
+	public async getAllKeys() {
 		await this._storage?.keys();
 	}
 }

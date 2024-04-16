@@ -3,6 +3,7 @@ export const APPCONSTANTS = {
 	TEMP_EMAIL: "tempEmail",
 	USER: "user",
 	CURRENT_URL: "currentURL",
+	TOKEN: "token",
 };
 
 export const HTTP_ERROR_MESSAGES = {

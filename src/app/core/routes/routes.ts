@@ -19,4 +19,5 @@ export enum RoutesPath {
 	NotesDetails = "/note-detail",
 	NotesDetailsReviews = "/reviews",
 	NotesDetailsReviewsCreate = "/reviews/create",
+	NotesView = "/view",
 }
