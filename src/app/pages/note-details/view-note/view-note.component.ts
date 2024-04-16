@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { IonModal, RangeCustomEvent } from "@ionic/angular";
 import { RangeValue, SearchbarCustomEvent } from "@ionic/core";
@@ -16,7 +16,7 @@ import { ToastService } from "src/app/core/services/toast.service";
 	templateUrl: "./view-note.component.html",
 	styleUrls: ["./view-note.component.scss"],
 })
-export class ViewNoteComponent {
+export class ViewNoteComponent implements OnDestroy {
 	@ViewChild("modalSearch") modalSearch!: IonModal;
 	@ViewChild("modalZoom") modalZoom!: IonModal;
 
@@ -38,6 +38,11 @@ export class ViewNoteComponent {
 		this.filePath = "";
 		this.lastEmittedValue = 0;
 		this.searchStringInFile = "";
+	}
+
+	ngOnDestroy(): void {
+		this.modalSearch.dismiss();
+		this.modalZoom.dismiss();
 	}
 
 	ionViewWillEnter(): void {
@@ -77,7 +82,6 @@ export class ViewNoteComponent {
 	}
 
 	public handleSearchOnPDFInput(event: SearchbarCustomEvent): void {
-		console.log("handleSearchOnPDFInput >>", event.detail.value);
 		this.searchStringInFile = event.detail.value!;
 	}
 

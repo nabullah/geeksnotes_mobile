@@ -18,9 +18,11 @@ export class SignalService {
 
 	constructor() {
 		this.getTokenFromStorage();
-		if (this.getToken() === "") {
-			this.setUserObject();
-		}
+		setTimeout(() => {
+			if (this.getToken() !== "") {
+				this.setUserObject();
+			}
+		}, 500);
 	}
 
 	public setCurrentRoute(route: string) {
