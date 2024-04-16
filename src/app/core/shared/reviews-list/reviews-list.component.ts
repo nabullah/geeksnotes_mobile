@@ -12,12 +12,15 @@ import { SignalService } from "../../services/signal.service";
 })
 export class ReviewsListComponent {
 	@Input() reviewsList: Reviews[];
+	@Input() noDataTitle: string;
+
 	@ViewChild("reviewActionModal", { static: false }) reviewActionModal!: IonModal;
 
 	private editReviewItem: Reviews;
 
 	constructor(private readonly router: Router, private readonly signalService: SignalService) {
 		this.reviewsList = [];
+		this.noDataTitle = "";
 		this.editReviewItem = {};
 	}
 

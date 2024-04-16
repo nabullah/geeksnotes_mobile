@@ -1,8 +1,10 @@
 import { RoutesPath } from "./../../core/routes/routes";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { takeWhile } from "rxjs";
+import { NO_DATA } from "src/app/core/enum/app.enum";
 import { APIResponse, LikeFile } from "src/app/core/interface";
-import { Notes } from "src/app/core/models";
+import { Notes, Reviews } from "src/app/core/models";
 import { ApiService } from "src/app/core/services/api.service";
 import { EncryptDecryptService } from "src/app/core/services/encrypt-decrypt.service";
 import { SignalService } from "src/app/core/services/signal.service";
@@ -14,15 +16,21 @@ import { ToastService } from "src/app/core/services/toast.service";
 	templateUrl: "./note-details.page.html",
 	styleUrls: ["./note-details.page.scss"],
 })
-export class NoteDetailsPage implements OnInit {
+export class NoteDetailsPage implements OnInit, OnDestroy {
 	public isLoaderActive: boolean;
+	public isLoaderActiveReviews: boolean;
 	public selectedDocId: number;
 	public noteDetail: Notes;
 	public noteDetailsTags: string[];
 	public isNoteFavourites: boolean;
 	public isNoteAlreadyLiked: boolean;
+	public isComponentLoaded: boolean;
 
 	public readonly routesPath: typeof RoutesPath;
+	public readonly noDataTextsEnum = NO_DATA;
+
+	public reviewsList: Reviews[];
+
 	constructor(
 		private readonly router: ActivatedRoute,
 		private readonly route: Router,
@@ -36,18 +44,25 @@ export class NoteDetailsPage implements OnInit {
 
 		this.noteDetailsTags = [];
 		this.isLoaderActive = false;
+		this.isLoaderActiveReviews = true;
 		this.isNoteFavourites = false;
 		this.isNoteAlreadyLiked = false;
+		this.isComponentLoaded = true;
 
 		this.routesPath = RoutesPath;
+		this.reviewsList = []
 	}
 
 	ngOnInit(): void {
 		this.getSingleNote();
 	}
+	ngOnDestroy(): void {
+		this.isComponentLoaded = false;
+	}
 
 	ionViewWillEnter(): void {
 		this.checkIsNoteLiked();
+		this.getAllReviewsForFile();
 	}
 
 	private getSingleNote() {
@@ -119,4 +134,19 @@ export class NoteDetailsPage implements OnInit {
 	}
 
 	public getRatingsData(): void {}
+	private getAllReviewsForFile(): void {
+		this.apiService
+			.listFileReviewsWithId(this.selectedDocId)
+			.pipe(takeWhile(() => this.isComponentLoaded))
+			.subscribe({
+				next: (res: APIResponse<Reviews>) => {
+					this.reviewsList = res.data as Reviews[];
+					this.reviewsList = this.reviewsList.slice(0, 10);;
+					this.isLoaderActiveReviews = false;
+				},
+				error: (err) => {
+					this.isLoaderActiveReviews = false;
+				},
+			});
+	}
 }

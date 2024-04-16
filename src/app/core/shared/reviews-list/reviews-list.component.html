@@ -1,4 +1,4 @@
-@for (item of reviewsList; track item.id) {
+@if(reviewsList.length > 0) { @for (item of reviewsList; track item.id) {
 <div class="my-2">
 	<ion-row>
 		<ion-col size="2">
@@ -17,27 +17,29 @@
 			<ion-text class="review-text text-sm font-normal block mb-1">{{ item.reviewText }}</ion-text>
 			}
 
-			<div class="flex justify-between mt-2">
-				<ion-text class="reviewer-name text-sm font-medium">{{ item.updatedAt! | timeAgo }}</ion-text>
+			<div class="flex justify-between mt-1">
+				<ion-text class="reviewer-name text-[12px] font-medium">{{ item.updatedAt! | timeAgo }}</ion-text>
 				<!-- <div class="flex gap-2 items-center">
-					<ion-icon name="thumbs-up-outline" class="text-base"></ion-icon>
-					<ion-text class="text-sm font-medium">10 </ion-text>
-				</div> -->
+						<ion-icon name="thumbs-up-outline" class="text-base"></ion-icon>
+						<ion-text class="text-sm font-medium">10 </ion-text>
+					</div> -->
 			</div>
 		</ion-col>
 	</ion-row>
 </div>
+} }@else {
+<div class="flex items-center justify-center h-[200px] text-lg">{{ noDataTitle }}</div>
 }
 <ion-modal #reviewActionModal trigger="open-action-modal" [initialBreakpoint]="0.15" [breakpoints]="[0, 0.15]">
 	<ng-template>
 		<ion-content class="ion-padding">
 			<div class="flex gap-3 items-center modal-header-icon mb-3" (click)="editFileReview()">
 				<ion-icon name="create-outline"></ion-icon>
-				<ion-text class="text-base font-semibold">Edit</ion-text>
+				<ion-text class="text-base font-normal">Edit</ion-text>
 			</div>
 			<div class="flex gap-3 items-center modal-header-icon">
 				<ion-icon name="trash-outline"></ion-icon>
-				<ion-text class="text-base font-semibold">Delete</ion-text>
+				<ion-text class="text-base font-normal">Delete</ion-text>
 			</div>
 		</ion-content>
 	</ng-template>

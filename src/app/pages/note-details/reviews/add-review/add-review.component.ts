@@ -35,7 +35,7 @@ export class AddReviewComponent implements OnDestroy, OnInit {
 		this.isLoaderActive = false;
 		this.fileId = +this.activatedRoute.snapshot.paramMap.get("id")!;
 
-		this.updateReviewData = {};
+		this.updateReviewData = new Reviews();
 		this.isUpdateReviewActive = false;
 	}
 	ngOnInit(): void {
@@ -69,7 +69,7 @@ export class AddReviewComponent implements OnDestroy, OnInit {
 				next: (res: APIResponse<Reviews>) => {
 					if (res.status) {
 						this.toast.presentToastSuccess("bottom", "Review posted successfully");
-						this.router.navigate([RoutesPath.NotesDetails + "/" + this.fileId + RoutesPath.NotesDetailsReviews]);
+						this.router.navigate([RoutesPath.NotesDetails + "/" + this.fileId]);
 					}
 				},
 				error: (err: any) => {
@@ -83,7 +83,7 @@ export class AddReviewComponent implements OnDestroy, OnInit {
 
 	private isReviewForUpdate(): void {
 		this.updateReviewData = this.signalService.storeUpdateReviewData();
-		if (this.updateReviewData) {
+		if (Object.keys(this.updateReviewData).length > 0) {
 			this.postReviewForm.patchValue({
 				reviewText: this.updateReviewData.reviewText,
 				rating: this.updateReviewData.ratings?.rating,

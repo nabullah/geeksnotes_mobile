@@ -172,6 +172,7 @@ export class RegisterComponent implements OnInit {
 					this.formIndex = 4;
 				} else {
 					this.toastService.presentToastError("bottom", res.message);
+					this.isLoaderActive = false;
 				}
 			},
 			error: (err) => {

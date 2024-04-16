@@ -17,7 +17,13 @@
 					<div class="flex justify-between">
 						<ion-text class="text-base font-medium block mb-2">Reviews</ion-text>
 					</div>
-					<app-reviews-list [reviewsList]="reviewsList"></app-reviews-list>
+					@if (isLoaderActive) {
+					<div class="flex items-center justify-center h-[300px]">
+						<app-loader></app-loader>
+					</div>
+					}@else {
+					<app-reviews-list [reviewsList]="reviewsList" [noDataTitle]="noDataEnum.Reviews"></app-reviews-list>
+					}
 				</div>
 			</ion-col>
 		</ion-row>

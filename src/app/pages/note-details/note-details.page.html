@@ -79,39 +79,20 @@
 				<ion-col size="12">
 					<hr />
 					<div class="reviews mt-3 mb-[70px]">
+						@if (!isLoaderActiveReviews) {
 						<div class="flex justify-between">
 							<ion-text class="text-base font-medium block mb-2">Reviews</ion-text>
 							<ion-text
 								class="text-sm font-medium flex items-center mb-2"
 								[routerLink]="[routesPath.NotesDetails + '/' + selectedDocId + routesPath.NotesDetailsReviews]"
 								routerLinkActive="router-link-active"
-								>3 Reviews <ion-icon name="chevron-forward"></ion-icon
+								>{{reviewsList.length}} Reviews <ion-icon name="chevron-forward"></ion-icon
 							></ion-text>
 						</div>
-						@for (item of [1,2,3]; track $index) {
-						<div class="my-2">
-							<ion-row>
-								<ion-col size="2">
-									<ion-thumbnail class="profile-image flex justify-center items-center rounded-full bg-zinc-600 text-slate-200">
-										<!-- <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" /> -->
-										<ion-text class="reviewer-name text-base font-medium block">NA</ion-text>
-									</ion-thumbnail>
-								</ion-col>
-								<ion-col size="10">
-									<ion-text class="reviewer-name text-base font-medium block mb-1">Reviewer-name</ion-text>
-									<ion-text class="review-text text-sm font-normal block mb-1"
-										>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt, consectetur?</ion-text
-									>
-
-									<div class="flex justify-between mt-2">
-										<ion-text class="reviewer-name text-sm font-medium">2 years ago</ion-text>
-										<div class="flex gap-2 items-center">
-											<ion-icon name="thumbs-up-outline" class="text-base"></ion-icon>
-											<ion-text class="text-sm font-medium">10 </ion-text>
-										</div>
-									</div>
-								</ion-col>
-							</ion-row>
+						<app-reviews-list [reviewsList]="reviewsList" [noDataTitle]="noDataTextsEnum.Reviews"></app-reviews-list>
+						}@else {
+						<div class="flex items-center justify-center h-[100px] w-full">
+							<app-loader></app-loader>
 						</div>
 						}
 					</div>

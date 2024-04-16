@@ -15,12 +15,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<!-- < -->
 	<form [formGroup]="postReviewForm">
 		<ion-grid>
 			<ion-row>
 				@if(isLoaderActive) {
-				<div class="flex items-center justify-center h-[300px]">
+				<div class="flex items-center justify-center h-[300px] w-full">
 					<app-loader></app-loader>
 				</div>
 				}@else {
