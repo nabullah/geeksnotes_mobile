@@ -28,12 +28,16 @@
 					</div>
 					<div class="flex gap-4 items-center py-4">
 						<div class="flex gap-2 items-center">
-							<ion-icon name="thumbs-up-outline" class="text-base"></ion-icon>
+							@if (isNoteAlreadyLiked) {
+							<ion-icon name="thumbs-up" class="text-base" (click)="postLikeNote()"></ion-icon>
+							}@else {
+							<ion-icon name="thumbs-up-outline" class="text-base" (click)="postLikeNote()"></ion-icon>
+							}
 							<ion-text class="text-sm font-medium">{{noteDetail.likes ?? 0}} </ion-text>
 						</div>
 						<div class="flex gap-2 items-center">
 							<ion-icon name="eye-outline" class="text-base"></ion-icon>
-							<ion-text class="text-sm font-medium">{{noteDetail.views ?? 0}} </ion-text>
+							<ion-text class="text-sm font-medium">{{noteDetail.views && noteDetail.views.views ? noteDetail.views.views : 0}} </ion-text>
 						</div>
 						<div class="flex gap-2 items-center">
 							<ion-icon name="cloud-download-outline" class="text-base"></ion-icon>
@@ -43,7 +47,10 @@
 				</ion-col>
 				<ion-col size="4">
 					<ion-thumbnail class="thumbnail w-full h-full shadow-sm">
-						<img [alt]="noteDetail.topic" [src]="noteDetail.thumbnail ? noteDetail.thumbnail.thumbnailPath : './assets/icon/default-thumbnail-png.svg'" />
+						<img
+							[alt]="noteDetail.topic"
+							[src]="noteDetail.thumbnails ? noteDetail.thumbnails.thumbnailPath : './assets/icon/default-thumbnail-png.svg'"
+						/>
 					</ion-thumbnail>
 				</ion-col>
 				<ion-col size="12">
@@ -76,7 +83,7 @@
 							<ion-text class="text-base font-medium block mb-2">Reviews</ion-text>
 							<ion-text
 								class="text-sm font-medium flex items-center mb-2"
-								[routerLink]="['/note-detail/0/reviews']"
+								[routerLink]="[routesPath.NotesDetails + '/' + selectedDocId + routesPath.NotesDetailsReviews]"
 								routerLinkActive="router-link-active"
 								>3 Reviews <ion-icon name="chevron-forward"></ion-icon
 							></ion-text>
@@ -118,12 +125,12 @@
 			</ion-fab-button>
 
 			@if(isNoteFavourites){
-			<ion-fab-button type="button" class="favourite-fab-btn">
-				<ion-icon name="bookmark" color="danger" (click)="onAddToLibrary()"></ion-icon>
+			<ion-fab-button type="button" class="favourite-fab-btn" (click)="onAddToLibrary()">
+				<ion-icon name="bookmark" color="danger"></ion-icon>
 			</ion-fab-button>
 			}@else {
-			<ion-fab-button type="button" class="favourite-fab-btn">
-				<ion-icon name="bookmark-outline" (click)="onAddToLibrary()"></ion-icon>
+			<ion-fab-button type="button" class="favourite-fab-btn" (click)="onAddToLibrary()">
+				<ion-icon name="bookmark-outline"></ion-icon>
 			</ion-fab-button>
 
 			}

@@ -1,9 +1,8 @@
 import { HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
-import { StorageService } from "../services/storage.service";
-import { APPCONSTANTS } from "../constants/app.constants";
 import { Router } from "@angular/router";
 import { RoutesPath } from "../routes/routes";
+import { SignalService } from "../services/signal.service";
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 	const token = getAuthorizationToken();
@@ -14,12 +13,12 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 		});
 		return next(reqWithHeader);
 	} else {
-		router.navigate([RoutesPath.Login]);
+		// router.navigate([RoutesPath.Login]);
 	}
 	return next(req);
 };
 
-async function getAuthorizationToken() {
-	const storageService = inject(StorageService);
-	return await storageService.get(APPCONSTANTS.USER);
+function getAuthorizationToken(): string {
+	const signalService = inject(SignalService);
+	return signalService.getToken();
 }

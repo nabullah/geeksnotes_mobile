@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { RoutesPath } from "../../routes/routes";
 import { NoteDetailsPage } from "src/app/pages/note-details/note-details.page";
-import { Notes } from "../../interface";
+import { Notes } from "../../models";
 
 @Component({
 	selector: "app-notes-listing",

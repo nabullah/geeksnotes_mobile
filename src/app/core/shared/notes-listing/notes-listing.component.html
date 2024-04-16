@@ -4,10 +4,10 @@
 		@for (note of notes; track $index) {
 		<ion-col size="6" sizeSm="4">
 			<ion-nav-link router-direction="forward" [component]="NoteDetailsComponent">
-				<ion-card class="mx-0" (click)="openDetailsPage(note.id)">
+				<ion-card class="mx-0" (click)="openDetailsPage(note.id!)">
 					<img
 						[alt]="note.topic"
-						[src]="note.thumbnail ? note.thumbnail.thumbnailPath : './assets/icon/default-thumbnail-png.svg'"
+						[src]="note.thumbnails && note.thumbnails.thumbnailPath ? note.thumbnails.thumbnailPath : './assets/icon/default-thumbnail-png.svg'"
 						class="h-[200px]"
 					/>
 					<ion-card-header class="px-[8px] py-[12px] h-[66px]">

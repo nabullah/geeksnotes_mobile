@@ -3,7 +3,7 @@
 		<ion-buttons slot="start">
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-buttons slot="end" id="open-modal-report" expand="block">
+		<ion-buttons slot="end" id="open-modal" expand="block">
 			<ion-icon name="ellipsis-horizontal" class="mr-2"></ion-icon>
 		</ion-buttons>
 	</ion-toolbar>
@@ -15,6 +15,70 @@
 		<app-loader></app-loader>
 	</div>
 	}
-	<app-pdf-viewer [source]="notesDetail.filePath" [renderText]="true" [originalSize]="true" (loadingPDFProgress)="afterPDFLoaded($event)" (errorResponse)="onPDFLoadError($event)">
+	<app-pdf-viewer
+		[source]="filePath"
+		[renderText]="true"
+		[originalSize]="true"
+		(loadingPDFProgress)="afterPDFLoaded($event)"
+		(errorResponse)="onPDFLoadError($event)"
+		[zoomValue]="lastEmittedValue"
+		[searchQueryInPDF]="searchStringInFile"
+	>
 	</app-pdf-viewer>
 </ion-content>
+
+<ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25]">
+	<ng-template>
+		<ion-content>
+			<ion-list lines="none">
+				<ion-item>
+					<div class="flex gap-4 items-center" (click)="openSearchModal(); modal?.dismiss()">
+						<ion-icon name="search-outline"></ion-icon>
+						<ion-text>Search</ion-text>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="flex gap-4 items-center" (click)="modalZoom?.present(); modal?.dismiss()">
+						<ion-icon name="swap-horizontal-outline"></ion-icon>
+						<ion-text>Zoom</ion-text>
+					</div>
+				</ion-item>
+				<ion-item>
+					<div class="flex gap-4 items-center">
+						<ion-icon name="cloud-download-outline"></ion-icon>
+						<ion-text>Download (Not Implemeneted)</ion-text>
+					</div>
+				</ion-item>
+			</ion-list>
+		</ion-content>
+	</ng-template>
+</ion-modal>
+
+<ion-modal #modalSearch [backdropDismiss]="false" [backdropBreakpoint]="0.2" [showBackdrop]="false" [initialBreakpoint]="0.1" [breakpoints]="[0.1]">
+	<ng-template>
+		<ion-content>
+			<ion-list lines="none">
+				<ion-item class="search-in-pdf-input">
+					<ion-icon name="arrow-back-outline" (click)="modal?.present(); modalSearch?.dismiss()"></ion-icon>
+					<ion-searchbar placeholder="Search in file" class="border-none" (ionInput)="handleSearchOnPDFInput($event)"></ion-searchbar>
+				</ion-item>
+			</ion-list>
+		</ion-content>
+	</ng-template>
+</ion-modal>
+
+<ion-modal #modalZoom [backdropDismiss]="false" [showBackdrop]="false" [backdropBreakpoint]="0.3" [initialBreakpoint]="0.25" [breakpoints]="[0.25]">
+	<ng-template>
+		<ion-content>
+			<ion-list lines="none">
+				<ion-item>
+					<ion-icon name="arrow-back-outline" (click)="modal?.present(); modalZoom?.dismiss()" class="pt-[1.75rem]"></ion-icon>
+					<ion-range [pin]="true" [pinFormatter]="pinFormatter" (ionChange)="handleZoomRangeChange($event)" min="1" max="10"></ion-range>
+				</ion-item>
+				<ion-item>
+					<ion-button class="w-full" (click)="setDocFitToPage()">Fit to Page</ion-button>
+				</ion-item>
+			</ion-list>
+		</ion-content>
+	</ng-template>
+</ion-modal>

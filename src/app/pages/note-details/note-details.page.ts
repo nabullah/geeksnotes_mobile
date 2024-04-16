@@ -1,7 +1,7 @@
 import { RoutesPath } from "./../../core/routes/routes";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { APIResponse } from "src/app/core/interface";
+import { APIResponse, LikeFile } from "src/app/core/interface";
 import { Notes } from "src/app/core/models";
 import { ApiService } from "src/app/core/services/api.service";
 import { EncryptDecryptService } from "src/app/core/services/encrypt-decrypt.service";
@@ -20,6 +20,7 @@ export class NoteDetailsPage implements OnInit {
 	public noteDetail: Notes;
 	public noteDetailsTags: string[];
 	public isNoteFavourites: boolean;
+	public isNoteAlreadyLiked: boolean;
 
 	public readonly routesPath: typeof RoutesPath;
 	constructor(
@@ -36,12 +37,17 @@ export class NoteDetailsPage implements OnInit {
 		this.noteDetailsTags = [];
 		this.isLoaderActive = false;
 		this.isNoteFavourites = false;
+		this.isNoteAlreadyLiked = false;
 
 		this.routesPath = RoutesPath;
 	}
 
 	ngOnInit(): void {
 		this.getSingleNote();
+	}
+
+	ionViewWillEnter(): void {
+		this.checkIsNoteLiked();
 	}
 
 	private getSingleNote() {
@@ -51,7 +57,7 @@ export class NoteDetailsPage implements OnInit {
 				if (response.status) {
 					this.noteDetail = this.encryptDecryptService.descrpUsingAES(response.data);
 					console.log("NoteDetailsPage: ", this.noteDetail);
-					this.noteDetailsTags = JSON.parse(this.noteDetail.tags);
+					this.noteDetailsTags = JSON.parse(this.noteDetail.tags!);
 				}
 			},
 			error: (err) => {
@@ -77,5 +83,40 @@ export class NoteDetailsPage implements OnInit {
 		} else {
 			this.toast.presentToastError("top", "Note removed from library");
 		}
+		this.postLikeNote();
 	}
+
+	public postLikeNote() {
+		this.apiService.postLikeNote({ fileId: this.selectedDocId!, userId: this.signalService.getUserObject().id! }).subscribe({
+			next: (response: APIResponse<LikeFile>) => {
+				if (response.status) {
+					if (!response.data["liked"]) {
+						this.noteDetail.likes = this.noteDetail.likes! - 1;
+						this.isNoteFavourites = this.isNoteAlreadyLiked = false;
+					} else {
+						this.noteDetail.likes = this.noteDetail.likes! + 1;
+						this.isNoteFavourites = this.isNoteAlreadyLiked = true;
+					}
+				}
+			},
+			error: (err) => {
+				// this.toast.presentToastError("top", err.error.error);
+			},
+		});
+	}
+
+	public checkIsNoteLiked() {
+		this.apiService.checkIsNoteLiked({ fileId: this.selectedDocId!, userId: this.signalService.getUserObject().id! }).subscribe({
+			next: (response: APIResponse<LikeFile>) => {
+				if (response.status) {
+					this.isNoteAlreadyLiked = this.isNoteFavourites = response.data["liked"];
+				}
+			},
+			error: (err) => {
+				// this.toast.presentToastError("top", err.error.error);
+			},
+		});
+	}
+
+	public getRatingsData(): void {}
 }

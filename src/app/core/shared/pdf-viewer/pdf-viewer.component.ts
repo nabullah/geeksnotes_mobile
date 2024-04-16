@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { PDFDocumentProxy, PDFProgressData } from "ng2-pdf-viewer";
+import { PdfViewerComponent } from "ng2-pdf-viewer";
 
 @Component({
 	selector: "app-pdf-viewer",
 	templateUrl: "./pdf-viewer.component.html",
 	styleUrls: ["./pdf-viewer.component.scss"],
 })
-export class PdfViewerComponent {
+export class PdfViewerCustomComponent implements OnChanges {
 	@Input() source: string;
 	@Input() page: number;
 	@Input() stickToPage: boolean;
@@ -18,6 +19,9 @@ export class PdfViewerComponent {
 	@Input() height: string;
 	@Input() autoresize: boolean;
 	@Input() showBorders: boolean;
+	@Input() zoomValue: number;
+
+	@Input() searchQueryInPDF: string;
 
 	// Get PDF information with callback
 	@Output() afterPDFLoaded: EventEmitter<any>;
@@ -37,6 +41,9 @@ export class PdfViewerComponent {
 	//Error handling callback
 	@Output() loadingPDFProgress: EventEmitter<PDFProgressData>;
 
+	// Refrence of PDF Viewer from package
+	@ViewChild(PdfViewerComponent) private pdfComponent!: PdfViewerComponent;
+
 	constructor() {
 		this.afterPDFLoaded = new EventEmitter();
 		this.afterPageRendered = new EventEmitter();
@@ -50,7 +57,7 @@ export class PdfViewerComponent {
 		this.stickToPage = false;
 		this.showAll = true;
 		this.renderText = true;
-		// this.zoom = 0;
+		this.zoomValue = 1;
 		this.originalSize = true;
 		this.fitToPage = true;
 
@@ -60,6 +67,13 @@ export class PdfViewerComponent {
 
 		this.width = "100%";
 		this.height = "100%";
+
+		this.searchQueryInPDF = "";
+	}
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes["searchQueryInPDF"]?.currentValue != changes["searchQueryInPDF"]?.previousValue) {
+			this.search(changes["searchQueryInPDF"].currentValue);
+		}
 	}
 
 	public afterLoadComplete(e: PDFDocumentProxy) {
@@ -84,5 +98,16 @@ export class PdfViewerComponent {
 
 	public onProgress(progressData: PDFProgressData) {
 		this.loadingPDFProgress.emit(progressData);
+	}
+
+	private search(stringToSearch: string) {
+		this.pdfComponent?.eventBus.dispatch("find", {
+			query: stringToSearch,
+			type: "again",
+			caseSensitive: false,
+			findPrevious: undefined,
+			highlightAll: true,
+			phraseSearch: true,
+		});
 	}
 }

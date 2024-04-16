@@ -11,7 +11,7 @@ export const tokenExpiredHandlerInterceptor: HttpInterceptorFn = (req, next) => 
 
 	return next(req).pipe(
 		catchError((error) => {
-			if (error.error.error === "jwt expired") {
+			if (error?.error?.error === "jwt expired") {
 				toast.presentToastCustom("warning", "top", "Your session has expired. Please login again");
 				router.navigate([RoutesPath.Login], { queryParams: { returnUrl: router.url } });
 			}

@@ -1,3 +1,5 @@
+import { Pagination } from "../models";
+
 export interface APIResponse<T> {
 	data: T;
 	status: number;
@@ -37,51 +39,10 @@ export interface Login {
 	token: string;
 }
 
-export interface Notes {
-	id: number;
-	filePath: string;
-	userId: number;
-	fileName: string;
-	topic: string;
-	subTopic: string;
-	description: string;
-	audienceRolesIds: string;
-	fileType: string;
-	isPrivate: boolean;
-	createdAt: string;
-	updatedAt: string;
-	user: User;
-	fileSize: string;
-	likes: number;
-	views: { fileId: number; views: number };
-	tags: string;
-	thumbnail: FileThumbnail;
-}
-
 export interface FileThumbnail {
 	id: number;
 	thumbnailPath: string;
 	fileId: number;
-}
-
-export interface User {
-	id: number;
-	fullName: string;
-	email: string;
-	address: string | null;
-	mobile: string | null;
-	status: string;
-	userRoleId: number;
-	color: string;
-	profession: string;
-	academicsDetailId: number;
-	dob: string | null;
-	permission: string;
-	isVerified: boolean;
-	createdAt: string;
-	updatedAt: string;
-	academicDetails: AcademicDetails;
-	role: string | null;
 }
 
 export interface AcademicDetails {
@@ -110,9 +71,12 @@ export interface NotificationList {
 	updatedAt: string;
 }
 
-export interface Pagination {
-	totalItems: number;
-	totalPages: number;
-	currentPage: number;
-	limit?: number;
+export interface Views {
+	fileId: number;
+	views: number;
+}
+
+export interface LikeFile {
+	fileId: number;
+	liked: boolean;
 }

@@ -36,6 +36,8 @@ export class CommonService {
 	public logOut() {
 		this.storageService.remove(APPCONSTANTS.USER);
 		this.storageService.remove(APPCONSTANTS.USER_ID);
+		this.storageService.remove(APPCONSTANTS.TOKEN);
+
 		this.setUserLoggedIn(false);
 		this.router.navigate([RoutesPath.Login]);
 	}

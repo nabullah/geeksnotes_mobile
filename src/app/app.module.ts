@@ -14,6 +14,7 @@ import { tokenExpiredHandlerInterceptor } from "./core/interceptor/token-expired
 import { errorInterceptor } from "./core/interceptor/error.interceptor";
 import { StorageService } from "./core/services/storage.service";
 import { Drivers } from "@ionic/storage";
+import { SignalService } from "./core/services/signal.service";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { Drivers } from "@ionic/storage";
 		provideHttpClient(withInterceptors([authInterceptor, tokenExpiredHandlerInterceptor, errorInterceptor])),
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 		StorageService,
+		SignalService,
 	],
 	bootstrap: [AppComponent],
 })

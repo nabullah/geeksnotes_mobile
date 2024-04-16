@@ -5,6 +5,7 @@ import { APPCONSTANTS } from "src/app/core/constants/app.constants";
 import { RoutesPath } from "src/app/core/routes/routes";
 import { ApiService } from "src/app/core/services/api.service";
 import { CommonService } from "src/app/core/services/common.service";
+import { SignalService } from "src/app/core/services/signal.service";
 import { StorageService } from "src/app/core/services/storage.service";
 import { ToastService } from "src/app/core/services/toast.service";
 
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
 		private readonly storageService: StorageService,
 		private readonly apiService: ApiService,
 		private readonly commonService: CommonService,
-		private readonly activatedRoute: ActivatedRoute
+		private readonly activatedRoute: ActivatedRoute,
+		private readonly signalService: SignalService
 	) {
 		this.submitted = false;
 		this.isLoaderActive = false;
@@ -59,7 +61,9 @@ export class LoginComponent implements OnInit {
 				if (res.status) {
 					this.storageService.set(APPCONSTANTS.USER_ID, res.data.user.id);
 					this.storageService.set(APPCONSTANTS.USER, res.data.user);
+					this.storageService.set(APPCONSTANTS.TOKEN, res.data.token);
 					this.commonService.setUserLoggedIn(true);
+					this.signalService.getUserObject.set(res.data.user);
 
 					const returnUrl = this.activatedRoute.snapshot.queryParams["returnUrl"] || RoutesPath.Notes;
 					this.router.navigate([returnUrl]);
