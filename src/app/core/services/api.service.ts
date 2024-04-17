@@ -1,7 +1,7 @@
 import { HttpClient, HttpEvent } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, retry } from "rxjs";
-import { APIResponse, AllUserRoles, LikeFile, Login, RegistrationStep1, RegistrationStep2 } from "../interface";
+import { APIResponse, APIResponsePaginated, AllUserRoles, LikeFile, Login, RegistrationStep1, RegistrationStep2 } from "../interface";
 import { APIURLS } from "../constants/api-endpoints";
 import { Notes, Reviews } from "../models";
 
@@ -84,7 +84,7 @@ export class ApiService {
 	updateFileReview(payload: { [key: string]: any }): Observable<APIResponse<Reviews>> {
 		return this.http.post<APIResponse<Reviews>>(APIURLS.UpdateFileReview, payload);
 	}
-	listFileReviewsWithId(fileId: number): Observable<APIResponse<Reviews>> {
-		return this.http.get<APIResponse<Reviews>>(`${APIURLS.ListAllReviewsFile}?fileId=${fileId}`);
+	listFileReviewsWithId(fileId: number): Observable<APIResponsePaginated<Reviews>> {
+		return this.http.get<APIResponsePaginated<Reviews>>(`${APIURLS.ListAllReviewsFile}?fileId=${fileId}`);
 	}
 }

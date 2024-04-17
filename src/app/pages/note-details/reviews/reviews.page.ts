@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { InfiniteScrollCustomEvent } from "@ionic/angular";
 import { takeWhile } from "rxjs";
 import { NO_DATA } from "src/app/core/enum/app.enum";
-import { APIResponse } from "src/app/core/interface";
+import { APIResponse, APIResponsePaginated } from "src/app/core/interface";
 import { Pagination, Reviews } from "src/app/core/models";
 import { RoutesPath } from "src/app/core/routes/routes";
 import { ApiService } from "src/app/core/services/api.service";
@@ -45,13 +46,26 @@ export class ReviewsPage implements OnDestroy {
 			.listFileReviewsWithId(this.fileId)
 			.pipe(takeWhile(() => this.isComponentLoaded))
 			.subscribe({
-				next: (res: APIResponse<Reviews>) => {
-					this.reviewsList = res.data as Reviews[];
+				next: (res: APIResponsePaginated<Reviews>) => {
+					this.reviewsList = res.data.data as Reviews[];
 					this.isLoaderActive = false;
 				},
 				error: (err) => {
 					this.isLoaderActive = false;
 				},
 			});
+	}
+
+	public onIonInfiniteReviewList(ev: InfiniteScrollCustomEvent): void {
+		// if (this.pagination.currentPage < this.pagination.totalPages) {
+		// 	this.pagination.currentPage += 1;
+		// 	this.getAllReviewsForFile();
+		// 	ev.target.complete();
+		// } else {
+		// 	ev.target.disabled = true;
+		// }
+		// setTimeout(() => {
+		// 	ev.target.complete();
+		// }, 500);
 	}
 }

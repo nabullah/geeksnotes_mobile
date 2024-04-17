@@ -3,8 +3,8 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { takeWhile } from "rxjs";
 import { NO_DATA } from "src/app/core/enum/app.enum";
-import { APIResponse, LikeFile } from "src/app/core/interface";
-import { Notes, Reviews } from "src/app/core/models";
+import { APIResponse, APIResponsePaginated, LikeFile } from "src/app/core/interface";
+import { Notes, Pagination, Reviews } from "src/app/core/models";
 import { ApiService } from "src/app/core/services/api.service";
 import { EncryptDecryptService } from "src/app/core/services/encrypt-decrypt.service";
 import { SignalService } from "src/app/core/services/signal.service";
@@ -25,6 +25,8 @@ export class NoteDetailsPage implements OnInit, OnDestroy {
 	public isNoteFavourites: boolean;
 	public isNoteAlreadyLiked: boolean;
 	public isComponentLoaded: boolean;
+
+	public reviewListPagination: Pagination;
 
 	public readonly routesPath: typeof RoutesPath;
 	public readonly noDataTextsEnum = NO_DATA;
@@ -50,7 +52,8 @@ export class NoteDetailsPage implements OnInit, OnDestroy {
 		this.isComponentLoaded = true;
 
 		this.routesPath = RoutesPath;
-		this.reviewsList = []
+		this.reviewsList = [];
+		this.reviewListPagination = new Pagination();
 	}
 
 	ngOnInit(): void {
@@ -139,9 +142,9 @@ export class NoteDetailsPage implements OnInit, OnDestroy {
 			.listFileReviewsWithId(this.selectedDocId)
 			.pipe(takeWhile(() => this.isComponentLoaded))
 			.subscribe({
-				next: (res: APIResponse<Reviews>) => {
-					this.reviewsList = res.data as Reviews[];
-					this.reviewsList = this.reviewsList.slice(0, 10);;
+				next: (res: APIResponsePaginated<Reviews>) => {
+					this.reviewsList = res.data.data as Reviews[];
+					this.reviewListPagination = res.data.pagination;
 					this.isLoaderActiveReviews = false;
 				},
 				error: (err) => {

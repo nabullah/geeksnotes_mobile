@@ -61,9 +61,11 @@ export class LoginComponent implements OnInit {
 				if (res.status) {
 					this.storageService.set(APPCONSTANTS.USER_ID, res.data.user.id);
 					this.storageService.set(APPCONSTANTS.USER, res.data.user);
-					this.storageService.set(APPCONSTANTS.TOKEN, res.data.token);
+					this.storageService.storeAuthorizationToken(res.data.token);
+					this.storageService.storeUserObject(res.data.user);
+					this.signalService.initializeAuthentications();
+
 					this.commonService.setUserLoggedIn(true);
-					this.signalService.getUserObject.set(res.data.user);
 
 					const returnUrl = this.activatedRoute.snapshot.queryParams["returnUrl"] || RoutesPath.Notes;
 					this.router.navigate([returnUrl]);

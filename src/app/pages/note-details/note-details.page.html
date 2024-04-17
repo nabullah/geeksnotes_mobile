@@ -86,7 +86,7 @@
 								class="text-sm font-medium flex items-center mb-2"
 								[routerLink]="[routesPath.NotesDetails + '/' + selectedDocId + routesPath.NotesDetailsReviews]"
 								routerLinkActive="router-link-active"
-								>{{reviewsList.length}} Reviews <ion-icon name="chevron-forward"></ion-icon
+								>{{reviewListPagination.totalItems}} Reviews <ion-icon name="chevron-forward"></ion-icon
 							></ion-text>
 						</div>
 						<app-reviews-list [reviewsList]="reviewsList" [noDataTitle]="noDataTextsEnum.Reviews"></app-reviews-list>
@@ -99,7 +99,7 @@
 				</ion-col>
 			</ion-row>
 		</ion-grid>
-		<div class="backdrop-blur-sm bg-white/30 flex gap-4 py-1 fixed bottom-0 left-0 right-0 justify-center px-4 pb-2">
+		<div class="backdrop-blur-sm bg-white/30 flex gap-4 py-1 fixed bottom-0 left-0 right-0 justify-center px-4 pb-2 z-10">
 			<ion-fab-button type="button" class="read-now-fab-btn" (click)="viewSelectedFile()">
 				<ion-icon name="document-text" class="mr-2" size="small"></ion-icon>
 				<ion-text class="uppercase font-medium text-sm">Read Now</ion-text>
