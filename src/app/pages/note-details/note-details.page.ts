@@ -1,7 +1,7 @@
 import { RoutesPath } from "./../../core/routes/routes";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { takeWhile } from "rxjs";
+import { map, takeWhile } from "rxjs";
 import { NO_DATA } from "src/app/core/enum/app.enum";
 import { APIResponse, APIResponsePaginated, LikeFile } from "src/app/core/interface";
 import { Notes, Pagination, Reviews } from "src/app/core/models";
@@ -139,12 +139,18 @@ export class NoteDetailsPage implements OnInit, OnDestroy {
 	public getRatingsData(): void {}
 	private getAllReviewsForFile(): void {
 		this.apiService
-			.listFileReviewsWithId(this.selectedDocId)
-			.pipe(takeWhile(() => this.isComponentLoaded))
-			.subscribe({
-				next: (res: APIResponsePaginated<Reviews>) => {
-					this.reviewsList = res.data.data as Reviews[];
+			.listFileReviewsWithId(this.selectedDocId, 1)
+			.pipe(
+				takeWhile(() => this.isComponentLoaded),
+				map((res: APIResponsePaginated<Reviews>) => {
+					const data = res.data.data as Reviews[];
 					this.reviewListPagination = res.data.pagination;
+					return data.slice(0, 5);
+				})
+			)
+			.subscribe({
+				next: (res: Reviews[]) => {
+					this.reviewsList = res;
 					this.isLoaderActiveReviews = false;
 				},
 				error: (err) => {

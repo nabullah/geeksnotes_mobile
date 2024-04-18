@@ -22,7 +22,7 @@
 						<app-loader></app-loader>
 					</div>
 					}@else {
-					<app-reviews-list [reviewsList]="reviewsList" [noDataTitle]="noDataEnum.Reviews"></app-reviews-list>
+					<app-reviews-list [reviewsList]="reviewsList" [noDataTitle]="noDataEnum.Reviews" (isReviewDeleted)="onReviewDelete($event)"></app-reviews-list>
 					<ion-infinite-scroll (ionInfinite)="onIonInfiniteReviewList($event)">
 						<ion-infinite-scroll-content></ion-infinite-scroll-content>
 					  </ion-infinite-scroll>

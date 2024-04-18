@@ -146,16 +146,9 @@ export class RegisterComponent implements OnInit {
 		this.apiService.registrationStep2(payload).subscribe({
 			next: (res: APIResponse<any>) => {
 				if (res.status) {
-					this.registerForm.reset();
-					this.storageService.set(APPCONSTANTS.USER_ID, res.data.user.id);
-					this.storageService.set(APPCONSTANTS.USER, res.data.user);
-					this.storageService.storeAuthorizationToken(res.data.token);
-					this.storageService.storeUserObject(res.data.user);
-					this.signalService.initializeAuthentications();
 					this.storageService.remove(APPCONSTANTS.TEMP_EMAIL);
-
-					this.commonService.setUserLoggedIn(true);
-					this.router.navigate([RoutesPath.Notes]);
+					this.registerForm.reset();
+					this.router.navigate([RoutesPath.Login]);
 					this.toastService.presentToastSuccess("top", res.message);
 					this.registerFormTwo.reset();
 				} else {

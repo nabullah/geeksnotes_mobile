@@ -21,6 +21,7 @@ export class Notes {
 	views?: Views;
 	totalDownloads?: number;
 	thumbnails?: FileThumbnail;
+	averageRating?: string;
 	constructor() {}
 }
 
@@ -29,5 +30,8 @@ export class Pagination {
 	totalPages?: number;
 	currentPage?: number;
 	limit?: number;
-	constructor() {}
+	constructor() {
+		this.currentPage = 1;
+		this.limit = 10;
+	}
 }

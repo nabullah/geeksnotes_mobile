@@ -84,7 +84,10 @@ export class ApiService {
 	updateFileReview(payload: { [key: string]: any }): Observable<APIResponse<Reviews>> {
 		return this.http.post<APIResponse<Reviews>>(APIURLS.UpdateFileReview, payload);
 	}
-	listFileReviewsWithId(fileId: number): Observable<APIResponsePaginated<Reviews>> {
-		return this.http.get<APIResponsePaginated<Reviews>>(`${APIURLS.ListAllReviewsFile}?fileId=${fileId}`);
+	listFileReviewsWithId(fileId: number, pageNumber: number): Observable<APIResponsePaginated<Reviews>> {
+		return this.http.get<APIResponsePaginated<Reviews>>(`${APIURLS.ListAllReviewsFile}?fileId=${fileId}&page=${pageNumber}&limit=10`);
+	}
+	deleteFileReviewsWithId(reviewId: number): Observable<APIResponse<[]>> {
+		return this.http.get<APIResponse<[]>>(`${APIURLS.DeleteReviews}?reviewId=${reviewId}`);
 	}
 }
