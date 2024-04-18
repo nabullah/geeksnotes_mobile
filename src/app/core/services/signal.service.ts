@@ -17,12 +17,7 @@ export class SignalService {
 	public storeUpdateReviewData = signal<Reviews>({});
 
 	constructor() {
-		this.getTokenFromStorage();
-		setTimeout(() => {
-			if (this.getToken() !== "") {
-				this.setUserObject();
-			}
-		}, 500);
+		this.initializeAuthentications();
 	}
 
 	public setCurrentRoute(route: string) {
@@ -33,13 +28,13 @@ export class SignalService {
 		return this.currentRoute();
 	}
 
-	private async getTokenFromStorage() {
-		const token = await this.storageService.get(APPCONSTANTS.TOKEN);
-		this.getToken.set(token);
+	private async setUserObject() {
+		const user = JSON.parse(localStorage.getItem(APPCONSTANTS.USER) || "{}");
+		this.getUserObject.set(user);
 	}
 
-	private async setUserObject() {
-		const user = await this.storageService.get(APPCONSTANTS.USER);
-		this.getUserObject.set(user);
+	public initializeAuthentications(): void {
+		this.setUserObject();
+		this.getToken.set(this.storageService.getAuthorizationToken());
 	}
 }

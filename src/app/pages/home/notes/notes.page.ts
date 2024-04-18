@@ -48,14 +48,19 @@ export class NotesPage implements OnInit, OnDestroy {
 		this.apiService
 			.getAllNotes()
 			.pipe(takeWhile(() => this.isComponentLoaded))
-			.subscribe((res: APIResponse<string>) => {
-				if (res.data) {
-					this.allNotesList = this.encryptDecryptService.descrpUsingAES(res.data);
-					console.log(this.allNotesList);
+			.subscribe({
+				next: (res: APIResponse<string>) => {
+					if (res.data) {
+						this.allNotesList = this.encryptDecryptService.descrpUsingAES(res.data);
+						console.log(this.allNotesList);
+						this.isLoaderActive = false;
+					} else {
+						this.isLoaderActive = false;
+					}
+				},
+				error: () => {
 					this.isLoaderActive = false;
-				} else {
-					this.isLoaderActive = false;
-				}
+				},
 			});
 	}
 

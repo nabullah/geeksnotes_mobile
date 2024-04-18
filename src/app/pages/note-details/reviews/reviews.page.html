@@ -22,13 +22,16 @@
 						<app-loader></app-loader>
 					</div>
 					}@else {
-					<app-reviews-list [reviewsList]="reviewsList" [noDataTitle]="noDataEnum.Reviews"></app-reviews-list>
+					<app-reviews-list [reviewsList]="reviewsList" [noDataTitle]="noDataEnum.Reviews" (isReviewDeleted)="onReviewDelete($event)"></app-reviews-list>
+					<ion-infinite-scroll (ionInfinite)="onIonInfiniteReviewList($event)">
+						<ion-infinite-scroll-content></ion-infinite-scroll-content>
+					  </ion-infinite-scroll>
 					}
 				</div>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-	<div class="backdrop-blur-sm bg-white/30 flex gap-4 py-1 fixed bottom-0 left-0 right-0 justify-center px-4 pb-2">
+	<div class="backdrop-blur-sm bg-white/30 flex gap-4 py-1 fixed bottom-0 left-0 right-0 justify-center px-4 pb-2 z-10">
 		<ion-fab-button
 			type="button"
 			class="read-now-fab-btn"

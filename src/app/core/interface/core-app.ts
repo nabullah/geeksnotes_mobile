@@ -5,6 +5,12 @@ export interface APIResponse<T> {
 	status: number;
 	message: string;
 }
+export interface APIResponsePaginated<T> {
+	data: { data: T; pagination: Pagination };
+	status: number;
+	message: string;
+}
+
 export interface AllUserRoles {
 	id: number;
 	roleType: string;

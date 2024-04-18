@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { takeWhile } from "rxjs";
@@ -23,6 +23,8 @@ export class AddReviewComponent implements OnDestroy, OnInit {
 	private updateReviewData: Reviews;
 	public isUpdateReviewActive: boolean;
 
+	@ViewChild("reviewTextarea", { static: false, read: ElementRef }) reviewTextarea!: ElementRef;
+
 	constructor(
 		private readonly apiService: ApiService,
 		private readonly fb: FormBuilder,
@@ -43,6 +45,11 @@ export class AddReviewComponent implements OnDestroy, OnInit {
 		this.isReviewForUpdate();
 	}
 
+	ionViewDidEnter() {
+		this.reviewTextarea.nativeElement.focus();
+
+	}
+
 	ngOnDestroy(): void {
 		this.isComponentLoaded = false;
 		this.signalService.storeUpdateReviewData.set(new Reviews());
@@ -57,6 +64,8 @@ export class AddReviewComponent implements OnDestroy, OnInit {
 	}
 
 	public createReview(): void {
+		if (!this.postReviewForm.value.reviewText || !this.postReviewForm.value.rating) return;
+
 		this.isLoaderActive = true;
 		const payload = {
 			...this.postReviewForm.value,
@@ -93,6 +102,7 @@ export class AddReviewComponent implements OnDestroy, OnInit {
 	}
 
 	public updateReview(): void {
+		if (!this.postReviewForm.value.reviewText || !this.postReviewForm.value.rating) return;
 		this.isLoaderActive = true;
 		const payload = {
 			...this.postReviewForm.value,

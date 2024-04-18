@@ -32,4 +32,5 @@ export const APIURLS = {
 	CreateFileReview: `${environment.API_URL}/reviews/create`,
 	UpdateFileReview: `${environment.API_URL}/reviews/update`,
 	ListAllReviewsFile: `${environment.API_URL}/reviews/list`,
+	DeleteReviews: `${environment.API_URL}/reviews/delete`,
 };

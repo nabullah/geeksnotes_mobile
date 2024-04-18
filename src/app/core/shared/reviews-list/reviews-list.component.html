@@ -9,10 +9,19 @@
 		<ion-col size="10">
 			<div class="flex justify-between items-center">
 				<ion-text class="reviewer-name text-base font-medium block mb-1">{{ item.user?.fullName }}</ion-text>
+				@if (item.userId === signalService.getUserObject().id) {
 				<ion-icon name="ellipsis-vertical" (click)="openReviewActionModal(item)"></ion-icon>
+				}
 			</div>
 			@if (item.ratings) {
-			<star-rating [starType]="'svg'" [rating]="+item.ratings.rating!" [showHalfStars]="true" [readOnly]="true" [space]="'no'"></star-rating>
+			<star-rating
+				[starType]="'svg'"
+				[size]="'small'"
+				[rating]="+item.ratings.rating!"
+				[showHalfStars]="true"
+				[readOnly]="true"
+				[space]="'no'"
+			></star-rating>
 			} @if (item.reviewText) {
 			<ion-text class="review-text text-sm font-normal block mb-1">{{ item.reviewText }}</ion-text>
 			}
@@ -37,9 +46,9 @@
 				<ion-icon name="create-outline"></ion-icon>
 				<ion-text class="text-base font-normal">Edit</ion-text>
 			</div>
-			<div class="flex gap-3 items-center modal-header-icon">
+			<div class="flex gap-3 items-center modal-header-icon" (click)="deleteFileReview()">
 				<ion-icon name="trash-outline"></ion-icon>
-				<ion-text class="text-base font-normal">Delete</ion-text>
+				<ion-text class="text-base font-normal">{{ isReviewDeleting ? "Deleting..." : "Delete" }}</ion-text>
 			</div>
 		</ion-content>
 	</ng-template>

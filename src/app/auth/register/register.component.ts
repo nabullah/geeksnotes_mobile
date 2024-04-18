@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
 		private readonly toastService: ToastService,
 		private readonly storageService: StorageService,
 		private readonly commonService: CommonService,
-		private readonly signalService: SignalService,
+		private readonly signalService: SignalService
 	) {
 		this.allUserRoles = [];
 		this.submitted = false;
@@ -146,16 +146,11 @@ export class RegisterComponent implements OnInit {
 		this.apiService.registrationStep2(payload).subscribe({
 			next: (res: APIResponse<any>) => {
 				if (res.status) {
-					this.registerForm.reset();
-					this.registerFormTwo.reset();
-					this.storageService.set(APPCONSTANTS.USER_ID, res.data.user.id);
-					this.storageService.set(APPCONSTANTS.USER, res.data.user);
-					this.storageService.set(APPCONSTANTS.TOKEN, res.data.token);
-					this.commonService.setUserLoggedIn(true);
-					this.signalService.getUserObject.set(res.data.user);
 					this.storageService.remove(APPCONSTANTS.TEMP_EMAIL);
-					this.router.navigate([RoutesPath.Notes]);
+					this.registerForm.reset();
+					this.router.navigate([RoutesPath.Login]);
 					this.toastService.presentToastSuccess("top", res.message);
+					this.registerFormTwo.reset();
 				} else {
 					this.toastService.presentToastError("top", res.message);
 				}
